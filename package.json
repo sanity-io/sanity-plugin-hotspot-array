@@ -1,0 +1,62 @@
+{
+  "name": "sanity-plugin-hotspot-array",
+  "version": "0.0.1",
+  "description": "A configurable Custom Input for Arrays that will add and update items by clicking on an Image",
+  "main": "lib/HotspotArray.js",
+  "scripts": {
+    "lint": "eslint .",
+    "build": "sanipack build",
+    "watch": "sanipack build --watch",
+    "prepublishOnly": "sanipack build && sanipack verify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/SimeonGriggs/sanity-plugin-hotspot-array.git"
+  },
+  "keywords": [
+    "sanity",
+    "sanity-plugin"
+  ],
+  "author": "Simeon Griggs <simeon@sanity.io>",
+  "license": "MIT",
+  "dependencies": {
+    "@sanity/asset-utils": "^1.2.3",
+    "@sanity/base": "^2.23.2",
+    "@sanity/form-builder": "^2.23.2",
+    "@sanity/ui": "^0.36.17",
+    "framer-motion": "^5.5.5",
+    "prop-types": "^15.7.2"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-config-sanity": "^5.1.0",
+    "eslint-plugin-react": "^7.27.1",
+    "prettier": "^2.5.1",
+    "sanipack": "^2.1.0"
+  },
+  "peerDependencies": {
+    "react": "^17.0.0"
+  },
+  "bugs": {
+    "url": "https://github.com/SimeonGriggs/sanity-plugin-hotspot-array/issues"
+  },
+  "homepage": "https://github.com/SimeonGriggs/sanity-plugin-hotspot-array#readme",
+  "prettier": {
+    "semi": false,
+    "printWidth": 100,
+    "bracketSpacing": false,
+    "singleQuote": true
+  },
+  "eslintConfig": {
+    "parser": "sanipack/babel/eslint-parser",
+    "extends": [
+      "sanity",
+      "sanity/react",
+      "prettier"
+    ],
+    "ignorePatterns": [
+      "lib/**/"
+    ]
+  }
+}
