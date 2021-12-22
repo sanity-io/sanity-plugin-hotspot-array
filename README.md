@@ -8,6 +8,8 @@ A configurable Custom Input for Arrays that will add and update items by clickin
 sanity install hotspot-array
 ```
 
+![2021-12-22 15 07 58](https://user-images.githubusercontent.com/9684022/147113578-d49d747a-4904-45b4-b4e0-409b33832226.gif)
+
 ## Setup
 
 Import the `HotspotArray` component from this package, into your schema. And insert it as the `inputComponent` of an `array` field.
