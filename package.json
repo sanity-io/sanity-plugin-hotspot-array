@@ -36,7 +36,10 @@
     "sanipack": "^2.1.0"
   },
   "peerDependencies": {
-    "react": "^17.0.0"
+    "react": "^17.0.0",
+    "@sanity/util": "2.23.2",
+    "@sanity/image-url": "1.0.1",
+    "lodash": "4.17.21"
   },
   "bugs": {
     "url": "https://github.com/SimeonGriggs/sanity-plugin-hotspot-array/issues"
