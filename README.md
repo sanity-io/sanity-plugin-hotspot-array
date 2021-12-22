@@ -27,16 +27,16 @@ export default {
       type: `array`,
       inputComponent: HotspotArray,
       of: [
-          // see `Spot object` setup below
+        // see `Spot object` setup below
       ],
       options: {
-          // see `Image and description path` setup below
-          hotspotImagePath: `featureImage`
-          hotspotDescriptionPath: `details`
-      }
-    }
+        // see `Image and description path` setup below
+        hotspotImagePath: `featureImage`,
+        hotspotDescriptionPath: `details`,
+      },
+    },
     // ...all your other fields
-  ]
+  ],
 }
 ```
 
