@@ -2,7 +2,7 @@
   "name": "sanity-plugin-hotspot-array",
   "version": "0.0.2",
   "description": "A configurable Custom Input for Arrays that will add and update items by clicking on an Image",
-  "main": "lib/HotspotArray.js",
+  "main": "lib/schemaType.js",
   "scripts": {
     "build": "sanipack build",
     "watch": "sanipack build --watch",
