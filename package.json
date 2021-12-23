@@ -33,13 +33,14 @@
     "@sanity/form-builder": "^2.23.2",
     "@sanity/ui": "^0.36.17",
     "framer-motion": "^5.5.5",
-    "prop-types": "^15.7.2"
+    "husky": "^7.0.1"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-config-sanity": "^5.1.0",
     "eslint-plugin-react": "^7.27.1",
+    "pinst": "^2.1.6",
     "prettier": "^2.5.1",
     "sanipack": "^2.1.0"
   },
