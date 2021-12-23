@@ -18,7 +18,7 @@ const dotStyle = {
 
 const round = (num) => Math.round(num * 100) / 100
 
-export default function Spot({spot, bounds = undefined, update, hotspotDescriptionPath = ``}) {
+export default function Spot({spot, bounds = undefined, update, hotspotDescriptionPath = ``, tooltip}) {
   // x/y are stored as % but need to be displayed as px
   const [{x, y}, setXY] = React.useState({x: 0, y: 0})
   const [rect, setRect] = React.useState({width: 0, height: 0})
@@ -82,9 +82,13 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
       boundaryElement={bounds.current}
       portal
       content={
-        <Box padding={2} style={{maxWidth: 200, pointerEvents: `none`}}>
-          <Text textOverflow="ellipsis">{hotspotDescriptionPath ? get(spot, hotspotDescriptionPath) : `${spot.x}% x ${spot.y}%`}</Text>
-        </Box>
+        tooltip && typeof tooltip === 'function' ? (
+          React.createElement(tooltip, {spot})
+        ) : (
+          <Box padding={2} style={{maxWidth: 200, pointerEvents: `none`}}>
+            <Text textOverflow="ellipsis">{hotspotDescriptionPath ? get(spot, hotspotDescriptionPath) : `${spot.x}% x ${spot.y}%`}</Text>
+          </Box>
+        )
       }
     >
       <motion.div

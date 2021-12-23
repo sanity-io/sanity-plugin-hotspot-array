@@ -25,6 +25,7 @@ const imageStyle = {width: `100%`, height: `auto`}
 
 const HotspotArray = React.forwardRef((props, ref) => {
   const {type, value, onChange, document: sanityDocument} = props
+  const {options} = type ?? {}
 
   // Attempt prevention of infinite loop in <FormBuilderInput />
   // Re-renders can still occur if this Component is used again in a nested field
@@ -33,7 +34,7 @@ const HotspotArray = React.forwardRef((props, ref) => {
   // Finding the image from the document,
   // using the path from the hotspot's `options` field
   const displayImage = React.useMemo(() => {
-    const hotspotImage = get(sanityDocument, type?.options?.hotspotImagePath)
+    const hotspotImage = get(sanityDocument, options?.hotspotImagePath)
 
     if (hotspotImage?.asset?._ref) {
       const {aspectRatio} = getImageDimensions(hotspotImage.asset._ref)
@@ -62,9 +63,8 @@ const HotspotArray = React.forwardRef((props, ref) => {
       y,
     }
 
-    if (type?.options?.hotspotDescriptionPath) {
-      console.log(type.options.hotspotDescriptionPath);
-      newRow[type.options.hotspotDescriptionPath] = description
+    if (options?.hotspotDescriptionPath) {
+      newRow[options.hotspotDescriptionPath] = description
     }
 
     onChange(PatchEvent.from(setIfMissing([]), insert([newRow], 'after', [-1])))
@@ -102,7 +102,8 @@ const HotspotArray = React.forwardRef((props, ref) => {
                 spot={spot}
                 bounds={hotspotImageRef}
                 update={handleHotspotMove}
-                hotspotDescriptionPath={type?.options?.hotspotDescriptionPath}
+                hotspotDescriptionPath={options?.hotspotDescriptionPath}
+                tooltip={options?.hotspotTooltip}
               />
             ))}
 

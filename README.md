@@ -33,6 +33,8 @@ export default {
         // see `Image and description path` setup below
         hotspotImagePath: `featureImage`,
         hotspotDescriptionPath: `details`,
+        // see `Custom tooltip` setup below
+        hotspotTooltip: undefined,
       },
     },
     // ...all your other fields
@@ -97,7 +99,7 @@ Here's an example object schema complete with initial values, validation, fields
   ],
   preview: {
     select: {
-      title: 'description',
+      title: 'details',
       x: 'x',
       y: 'y',
     },
@@ -111,9 +113,25 @@ Here's an example object schema complete with initial values, validation, fields
 }
 ```
 
-## Future cool ideas I just haven't added (yet?)
+## Custom tooltip
 
-- An `options` key to define a custom preview component for the Spot's `<Tooltip />`
+You can customise the Tooltip to display any Component, it will accept a single prop `spot` which contains the values of the object. Example:
+
+```js
+import HotspotArray from 'sanity-plugin-hotspot-array'
+import ProductPreview from '../../components/ProductPreview'
+
+// Setup a custom tooltip component
+function ProductPreview({spot}) {
+  return <div>{JSON.stringify(spot)}</div>
+}
+
+// ...then add to your schema definition
+options: {
+ hotspotImagePath: `hotspotImage`,
+ hotspotTooltip: ProductPreview,
+},
+```
 
 ## License
 
