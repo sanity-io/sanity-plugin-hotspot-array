@@ -115,18 +115,35 @@ Here's an example object schema complete with initial values, validation, fields
 
 ## Custom tooltip
 
-You can customise the Tooltip to display any Component, it will accept a single prop `spot` which contains the values of the object. Example:
+You can customise the Tooltip to display any Component, it will accept a single prop `spot` which contains the values of the object.
+
+In this example our `spot` object has a `reference` field to the `product` schema type, and will show a Document Preview.
+
+```js
+// Setup a custom tooltip component
+import Preview from 'part:@sanity/base/preview'
+import schema from 'part:@sanity/base/schema'
+import {Box} from '@sanity/ui'
+
+export default function ProductPreview({spot}) {
+  return (
+    <Box padding={2} style={{minWidth: 200}}>
+      {spot?.product?._ref ? (
+        <Preview value={{_id: spot.product._ref}} type={schema.get(`product`)} />
+      ) : (
+        `No Reference Selected`
+      )}
+    </Box>
+  )
+}
+```
+
+Then back in your schema definition
 
 ```js
 import HotspotArray from 'sanity-plugin-hotspot-array'
 import ProductPreview from '../../components/ProductPreview'
 
-// Setup a custom tooltip component
-function ProductPreview({spot}) {
-  return <div>{JSON.stringify(spot)}</div>
-}
-
-// ...then add to your schema definition
 options: {
  hotspotImagePath: `hotspotImage`,
  hotspotTooltip: ProductPreview,
