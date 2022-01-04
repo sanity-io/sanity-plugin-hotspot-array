@@ -21,7 +21,7 @@ const round = (num) => Math.round(num * 100) / 100
 export default function Spot({spot, bounds = undefined, update, hotspotDescriptionPath = ``, tooltip}) {
   // x/y are stored as % but need to be displayed as px
   const [{x, y}, setXY] = React.useState({x: 0, y: 0})
-  const [rect, setRect] = React.useState({width: 0, height: 0})
+  const [rect, setRect] = React.useState(bounds?.current ? bounds.current.getBoundingClientRect() : {width: 0, height:0})
   const [isDragging, setIsDragging] = React.useState(false)
 
   React.useEffect(() => {
@@ -34,7 +34,9 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
         y: round(clientRect.height * (spot.y / 100)),
       })
 
-      setRect(clientRect)
+      if (!rect.width || !rect.height) {
+        setRect(clientRect)
+      }
     }
   }, [bounds, bounds.current])
 
@@ -57,10 +59,14 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
         return console.warn(`Missing or non-number X or Y`, {currentX, currentY}, event.srcElement)
       }
 
+      if (!rect.width || !rect.height) {
+        return console.warn(`Rect width/height not yet set`, {rect}, bounds?.current)
+      }
+
       // Which we need to convert back to `%` to patch the document
       const newX = round((currentX * 100) / rect.width)
       const newY = round((currentY * 100) / rect.height)
-
+      
       // Don't go below 0 or above 100
       const safeX = Math.max(0, Math.min(100, newX))
       const safeY = Math.max(0, Math.min(100, newY))
