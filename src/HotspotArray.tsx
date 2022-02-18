@@ -18,7 +18,7 @@ import Spot from './Spot'
 import { useUnsetInputComponent } from './useUnsetInputComponent'
 import Feedback from './Feedback'
 
-const builder = imageUrlBuilder(sanityClient)
+const builder = imageUrlBuilder(sanityClient).dataset(sanityClient.config().dataset)
 const urlFor = (source) => builder.image(source)
 const imageStyle = {width: `100%`, height: `auto`}
 
