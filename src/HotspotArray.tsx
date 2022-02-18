@@ -18,10 +18,7 @@ import Spot from './Spot'
 import { useUnsetInputComponent } from './useUnsetInputComponent'
 import Feedback from './Feedback'
 
-const builder = imageUrlBuilder(sanityClient).dataset(sanityClient.config().dataset)
-const urlFor = (source) => builder.image(source)
 const imageStyle = {width: `100%`, height: `auto`}
-
 
 const HotspotArray = React.forwardRef((props, ref) => {
   const {type, value, onChange, document: sanityDocument} = props
@@ -34,6 +31,8 @@ const HotspotArray = React.forwardRef((props, ref) => {
   // Finding the image from the document,
   // using the path from the hotspot's `options` field
   const displayImage = React.useMemo(() => {
+    const builder = imageUrlBuilder(sanityClient).dataset(sanityClient.config().dataset)
+    const urlFor = (source) => builder.image(source)
     const hotspotImage = get(sanityDocument, options?.hotspotImagePath)
 
     if (hotspotImage?.asset?._ref) {
