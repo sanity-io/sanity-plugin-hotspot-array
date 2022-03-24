@@ -21,7 +21,7 @@ import Feedback from './Feedback'
 const imageStyle = {width: `100%`, height: `auto`}
 
 const HotspotArray = React.forwardRef((props, ref) => {
-  const {type, value, onChange, document: sanityDocument, parent} = props
+  const {type, value, onChange, document, parent} = props
   const {options} = type ?? {}
 
   // Attempt prevention of infinite loop in <FormBuilderInput />
@@ -33,8 +33,8 @@ const HotspotArray = React.forwardRef((props, ref) => {
   const displayImage = React.useMemo(() => {
     const builder = imageUrlBuilder(sanityClient).dataset(sanityClient.config().dataset)
     const urlFor = (source) => builder.image(source)
-    const hotspotImageParentObject = options?.hotspotImagePathInParent === true ? parent : sanityDocument
-    const hotspotImage = get(hotspotImageParentObject, options?.hotspotImagePath)
+    const imageHotspotPathRoot = props[options?.imageHotspotPathRoot] || document
+    const hotspotImage = get(imageHotspotPathRoot, options?.hotspotImagePath)
 
     if (hotspotImage?.asset?._ref) {
       const {aspectRatio} = getImageDimensions(hotspotImage.asset._ref)
@@ -46,7 +46,7 @@ const HotspotArray = React.forwardRef((props, ref) => {
     }
 
     return null
-  }, [parent, sanityDocument, type])
+  }, [type])
 
   const handleHotspotImageClick = React.useCallback((event) => {
     const {nativeEvent} = event
