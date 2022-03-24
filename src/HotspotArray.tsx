@@ -28,7 +28,7 @@ const HotspotArray = React.forwardRef((props, ref) => {
   // Re-renders can still occur if this Component is used again in a nested field
   const typeWithoutInputComponent = useUnsetInputComponent(type, type?.inputComponent)
 
-  // Finding the image from the document or parent (if hotspotImagePathInParent is set to true),
+  // Finding the image from the imageHotspotPathRoot (defaults to document),
   // using the path from the hotspot's `options` field
   const displayImage = React.useMemo(() => {
     const builder = imageUrlBuilder(sanityClient).dataset(sanityClient.config().dataset)
