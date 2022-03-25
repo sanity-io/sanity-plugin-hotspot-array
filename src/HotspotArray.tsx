@@ -20,6 +20,8 @@ import Feedback from './Feedback'
 
 const imageStyle = {width: `100%`, height: `auto`}
 
+const VALID_ROOT_PATHS = ['document', 'parent']
+
 const HotspotArray = React.forwardRef((props, ref) => {
   const {type, value, onChange, document, parent} = props
   const {options} = type ?? {}
@@ -33,7 +35,8 @@ const HotspotArray = React.forwardRef((props, ref) => {
   const displayImage = React.useMemo(() => {
     const builder = imageUrlBuilder(sanityClient).dataset(sanityClient.config().dataset)
     const urlFor = (source) => builder.image(source)
-    const imageHotspotPathRoot = props[options?.imageHotspotPathRoot] || document
+
+    const imageHotspotPathRoot = VALID_ROOT_PATHS.includes(options?.imageHotspotPathRoot) ? props[options.imageHotspotPathRoot] : document
     const hotspotImage = get(imageHotspotPathRoot, options?.hotspotImagePath)
 
     if (hotspotImage?.asset?._ref) {
@@ -46,7 +49,7 @@ const HotspotArray = React.forwardRef((props, ref) => {
     }
 
     return null
-  }, [type])
+  }, [type, document])
 
   const handleHotspotImageClick = React.useCallback((event) => {
     const {nativeEvent} = event
@@ -123,12 +126,16 @@ const HotspotArray = React.forwardRef((props, ref) => {
         </div>
       ) : (
         <Feedback>
-            {type?.options?.hotspotImagePath 
-              ? <>No Hotspot image found at path <code>{type?.options?.hotspotImagePath}</code></> 
+            {type?.options?.hotspotImagePath
+              ? <>No Hotspot image found at path <code>{type?.options?.hotspotImagePath}</code></>
               : <>Define a path in this field using to the image field in this document at <code>options.hotspotImagePath</code></>
             }
           </Feedback>
       )}
+        {type?.options?.imageHotspotPathRoot && !VALID_ROOT_PATHS.includes(type.options.imageHotspotPathRoot) &&
+        <Feedback>
+            The supplied imageHotspotPathRoot "{type.options.imageHotspotPathRoot}" is not valid, falling back to "document". Available values are "{VALID_ROOT_PATHS.join(', ')}".
+        </Feedback>}
       <FormBuilderInput {...props} type={typeWithoutInputComponent} ref={ref} />
     </Stack>
   )
