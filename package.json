@@ -28,6 +28,7 @@
   "author": "Simeon Griggs <simeon@sanity.io>",
   "license": "MIT",
   "dependencies": {
+    "@react-hookz/web": "^14.2.2",
     "@sanity/asset-utils": "^1.2.3",
     "@sanity/base": "^2.30.1",
     "@sanity/form-builder": "^2.30.1",
