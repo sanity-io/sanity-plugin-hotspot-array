@@ -1,7 +1,8 @@
 import { Box, Card, Text, Tooltip } from '@sanity/ui'
 import { motion, useMotionValue } from 'framer-motion'
 import get from 'lodash/get'
-import React, { CSSProperties } from 'react'
+import React, { CSSProperties, ReactElement } from 'react'
+import { FnHotspotMove, TSpot } from './HotspotArray'
 
 const dragStyle: CSSProperties = {
   width: '1rem',
@@ -31,7 +32,15 @@ const dotStyle: CSSProperties = {
 
 const round = (num) => Math.round(num * 100) / 100
 
-export default function Spot({spot, bounds = undefined, update, hotspotDescriptionPath = ``, tooltip}) {
+interface IHotspot {
+  spot: TSpot
+  bounds: React.MutableRefObject<HTMLImageElement | null>
+  update: FnHotspotMove
+  hotspotDescriptionPath?: string
+  tooltip?: ReactElement
+}
+
+export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``, tooltip}: IHotspot) {
   // x/y are stored as % but need to be converted to px
   const x = useMotionValue(0)
   const y = useMotionValue(0)

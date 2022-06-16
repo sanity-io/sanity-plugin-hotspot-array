@@ -22,7 +22,16 @@ const imageStyle = {width: `100%`, height: `auto`}
 
 const VALID_ROOT_PATHS = ['document', 'parent']
 
-const HotspotArray = React.forwardRef((props, ref) => {
+export type FnHotspotMove = (key: string, x: number, y: number) => void
+
+export type TSpot = {
+	_key: string
+	_type: `spot`
+	x: number
+	y: number
+} & { [key: string]: unknown }
+
+const HotspotArray = React.forwardRef((props: any, ref) => {
   const {type, value, onChange, document, parent} = props
   const {options} = type ?? {}
 
@@ -73,7 +82,7 @@ const HotspotArray = React.forwardRef((props, ref) => {
     onChange(PatchEvent.from(setIfMissing([]), insert([newRow], 'after', [-1])))
   }, [])
 
-  const handleHotspotMove = React.useCallback(
+  const handleHotspotMove: FnHotspotMove = React.useCallback(
     (key, x, y) => {
       if (!Number(x) || !Number(y)) {
         console.warn(`Missing or non-number X or Y`, {x, y})
@@ -92,7 +101,7 @@ const HotspotArray = React.forwardRef((props, ref) => {
     [value]
   )
 
-  const hotspotImageRef = React.useRef(null)
+  const hotspotImageRef = React.useRef<HTMLImageElement | null>(null)
 
   return (
     <Stack space={[2,2,3]}>
