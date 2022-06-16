@@ -75,7 +75,7 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
     const y = Number(((nativeEvent.offsetY * 100) / nativeEvent.srcElement.height).toFixed(2))
     const description = `New Hotspot at ${x}% x ${y}%`
 
-    const newRow = {
+    const newRow: TSpot = {
       _key: randomKey(12),
       _type: `spot`,
       x,
