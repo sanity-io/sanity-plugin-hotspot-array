@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Text } from '@sanity/ui'
+import {Card, Text} from '@sanity/ui'
 
 export default function Feedback({children}) {
   return (

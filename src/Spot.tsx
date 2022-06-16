@@ -1,8 +1,8 @@
-import { Box, Card, Text, Tooltip } from '@sanity/ui'
-import { motion, useMotionValue } from 'framer-motion'
+import {Box, Card, Text, Tooltip} from '@sanity/ui'
+import {motion, useMotionValue} from 'framer-motion'
 import get from 'lodash/get'
-import React, { CSSProperties, ReactElement, useEffect } from 'react'
-import { FnHotspotMove, TSpot } from './HotspotArray'
+import React, {CSSProperties, ReactElement, useEffect} from 'react'
+import {FnHotspotMove, TSpot} from './HotspotArray'
 
 const dragStyle: CSSProperties = {
   width: '1rem',

@@ -3,21 +3,21 @@
 // @ts-ignore
 import sanityClient from 'part:@sanity/base/client'
 // @ts-ignore
-import { withDocument } from 'part:@sanity/form-builder'
+import {withDocument} from 'part:@sanity/form-builder'
 
-import { getImageDimensions } from '@sanity/asset-utils'
-import { FormBuilderInput } from '@sanity/form-builder/lib/FormBuilderInput'
-import { insert, PatchEvent, set, setIfMissing } from '@sanity/form-builder/PatchEvent'
+import {getImageDimensions} from '@sanity/asset-utils'
+import {FormBuilderInput} from '@sanity/form-builder/lib/FormBuilderInput'
+import {insert, PatchEvent, set, setIfMissing} from '@sanity/form-builder/PatchEvent'
 import imageUrlBuilder from '@sanity/image-url'
-import { Card, Flex, Stack } from '@sanity/ui'
-import { randomKey } from '@sanity/util/content'
+import {Card, Flex, Stack} from '@sanity/ui'
+import {randomKey} from '@sanity/util/content'
 import get from 'lodash/get'
-import React, { useState } from 'react'
+import React, {useState} from 'react'
 
-import { IUseResizeObserverCallback, useDebouncedCallback, useResizeObserver } from '@react-hookz/web'
+import {IUseResizeObserverCallback, useDebouncedCallback, useResizeObserver} from '@react-hookz/web'
 import Feedback from './Feedback'
 import Spot from './Spot'
-import { useUnsetInputComponent } from './useUnsetInputComponent'
+import {useUnsetInputComponent} from './useUnsetInputComponent'
 
 const imageStyle = {width: `100%`, height: `auto`}
 
