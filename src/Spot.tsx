@@ -8,6 +8,7 @@ const dragStyle: CSSProperties = {
   width: '1.4rem',
   height: '1.4rem',
   position: 'absolute',
+  boxSizing: 'border-box',
   top: 0,
   left: 0,
   margin: '-0.7rem 0 0 -0.7rem',
