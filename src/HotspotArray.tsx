@@ -33,27 +33,30 @@ export type TSpot = {
 } & {[key: string]: unknown}
 
 const HotspotArray = React.forwardRef((props: any, ref) => {
-  const {type, value, onChange, document, parent} = props
+  const {type, value, onChange, document} = props
   const {options} = type ?? {}
 
   // Attempt prevention of infinite loop in <FormBuilderInput />
   // Re-renders can still occur if this Component is used again in a nested field
   const typeWithoutInputComponent = useUnsetInputComponent(type, type?.inputComponent)
-  const imageHotspotPathRoot = React.useMemo(
-    () =>
-      VALID_ROOT_PATHS.includes(options?.imageHotspotPathRoot)
-        ? props[options.imageHotspotPathRoot]
-        : document,
-    []
-  )
+  const imageHotspotPathRoot = VALID_ROOT_PATHS.includes(options?.imageHotspotPathRoot)
+    ? props[options.imageHotspotPathRoot]
+    : document
 
-  // Finding the image from the imageHotspotPathRoot (defaults to document),
-  // using the path from the hotspot's `options` field
+  /**
+   * Finding the image from the imageHotspotPathRoot (defaults to document),
+   * using the path from the hotspot's `options` field
+   *
+   * when changes in imageHotspotPathRoot (e.g. document) occur,
+   * check if there are any changes to the hotspotImage and update the reference
+   */
+  const hotspotImage = React.useMemo(() => {
+    return get(imageHotspotPathRoot, options?.hotspotImagePath)
+  }, [imageHotspotPathRoot])
+
   const displayImage = React.useMemo(() => {
     const builder = imageUrlBuilder(sanityClient).dataset(sanityClient.config().dataset)
     const urlFor = (source) => builder.image(source)
-
-    const hotspotImage = get(imageHotspotPathRoot, options?.hotspotImagePath)
 
     if (hotspotImage?.asset?._ref) {
       const {aspectRatio} = getImageDimensions(hotspotImage.asset._ref)
@@ -65,7 +68,7 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
     }
 
     return null
-  }, [type, imageHotspotPathRoot])
+  }, [hotspotImage])
 
   const handleHotspotImageClick = React.useCallback((event) => {
     const {nativeEvent} = event
