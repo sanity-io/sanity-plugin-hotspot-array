@@ -12,8 +12,9 @@ import imageUrlBuilder from '@sanity/image-url'
 import { Card, Flex, Stack } from '@sanity/ui'
 import { randomKey } from '@sanity/util/content'
 import get from 'lodash/get'
-import React from 'react'
+import React, { useState } from 'react'
 
+import { IUseResizeObserverCallback, useDebouncedCallback, useResizeObserver } from '@react-hookz/web'
 import Feedback from './Feedback'
 import Spot from './Spot'
 import { useUnsetInputComponent } from './useUnsetInputComponent'
@@ -25,10 +26,10 @@ const VALID_ROOT_PATHS = ['document', 'parent']
 export type FnHotspotMove = (key: string, x: number, y: number) => void
 
 export type TSpot = {
-	_key: string
-	_type: `spot`
-	x: number
-	y: number
+  _key: string
+  _type: `spot`
+  x: number
+  y: number
 } & { [key: string]: unknown }
 
 const HotspotArray = React.forwardRef((props: any, ref) => {
@@ -38,6 +39,7 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
   // Attempt prevention of infinite loop in <FormBuilderInput />
   // Re-renders can still occur if this Component is used again in a nested field
   const typeWithoutInputComponent = useUnsetInputComponent(type, type?.inputComponent)
+  const imageHotspotPathRoot = React.useMemo(() => (VALID_ROOT_PATHS.includes(options?.imageHotspotPathRoot) ? props[options.imageHotspotPathRoot] : document), [])
 
   // Finding the image from the imageHotspotPathRoot (defaults to document),
   // using the path from the hotspot's `options` field
@@ -45,7 +47,6 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
     const builder = imageUrlBuilder(sanityClient).dataset(sanityClient.config().dataset)
     const urlFor = (source) => builder.image(source)
 
-    const imageHotspotPathRoot = VALID_ROOT_PATHS.includes(options?.imageHotspotPathRoot) ? props[options.imageHotspotPathRoot] : document
     const hotspotImage = get(imageHotspotPathRoot, options?.hotspotImagePath)
 
     if (hotspotImage?.asset?._ref) {
@@ -58,7 +59,7 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
     }
 
     return null
-  }, [type, document])
+  }, [type, imageHotspotPathRoot])
 
   const handleHotspotImageClick = React.useCallback((event) => {
     const {nativeEvent} = event
@@ -103,16 +104,20 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
 
   const hotspotImageRef = React.useRef<HTMLImageElement | null>(null)
 
+  const [imageRect, setImageRect] = useState<DOMRectReadOnly>()
+  const updateImageRectCallback = useDebouncedCallback(((e) => setImageRect(e.contentRect)) as IUseResizeObserverCallback, [setImageRect], 200)
+  useResizeObserver(hotspotImageRef, updateImageRectCallback)
+
   return (
     <Stack space={[2,2,3]}>
       {displayImage?.url ? (
         <div style={{position: `relative`}}>
-          {value?.length > 0 &&
+          {imageRect && value?.length > 0 &&
             value.map((spot) => (
               <Spot
                 key={spot._key}
                 spot={spot}
-                bounds={hotspotImageRef}
+                bounds={imageRect}
                 update={handleHotspotMove}
                 hotspotDescriptionPath={options?.hotspotDescriptionPath}
                 tooltip={options?.hotspotTooltip}

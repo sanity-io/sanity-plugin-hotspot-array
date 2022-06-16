@@ -1,7 +1,7 @@
 import { Box, Card, Text, Tooltip } from '@sanity/ui'
 import { motion, useMotionValue } from 'framer-motion'
 import get from 'lodash/get'
-import React, { CSSProperties, ReactElement } from 'react'
+import React, { CSSProperties, ReactElement, useEffect } from 'react'
 import { FnHotspotMove, TSpot } from './HotspotArray'
 
 const dragStyle: CSSProperties = {
@@ -34,33 +34,25 @@ const round = (num) => Math.round(num * 100) / 100
 
 interface IHotspot {
   spot: TSpot
-  bounds: React.MutableRefObject<HTMLImageElement | null>
+  bounds: DOMRectReadOnly
   update: FnHotspotMove
   hotspotDescriptionPath?: string
   tooltip?: ReactElement
 }
 
 export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``, tooltip}: IHotspot) {
-  // x/y are stored as % but need to be converted to px
-  const x = useMotionValue(0)
-  const y = useMotionValue(0)
-  const [rect, setRect] = React.useState(bounds?.current ? bounds.current.getBoundingClientRect() : {width: 0, height:0})
   const [isDragging, setIsDragging] = React.useState(false)
+  // x/y are stored as % but need to be converted to px
+  const x = useMotionValue(round(bounds.width * (spot.x / 100)))
+  const y = useMotionValue(round(bounds.height * (spot.y / 100)))
 
-  React.useEffect(() => {
-    const clientRect = bounds?.current?.getBoundingClientRect()
-
-    if (clientRect) {
-
-      // So convert % to px once we know the height/width of the image
-      x.set(round(clientRect.width * (spot.x / 100)))
-      y.set(round(clientRect.height * (spot.y / 100)))
-
-      if (!rect.width || !rect.height) {
-        setRect(clientRect)
-      }
-    }
-  }, [bounds, bounds.current])
+  /**
+   * update x/y if the bounds change when resizing the window
+   */
+   useEffect(() => {
+    x.set(round(bounds.width * (spot.x / 100)))
+    y.set(round(bounds.height * (spot.y / 100)))
+  }, [bounds])
 
   const handleDragEnd = React.useCallback(
     (event) => {
@@ -74,13 +66,13 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``,
         return console.warn(`Missing or non-number X or Y`, {currentX, currentY}, event.srcElement)
       }
 
-      if (!rect.width || !rect.height) {
-        return console.warn(`Rect width/height not yet set`, {rect}, bounds?.current)
+      if (!bounds.width || !bounds.height) {
+        return console.warn(`Rect width/height not yet set`, { bounds })
       }
 
       // Which we need to convert back to `%` to patch the document
-      const newX = round((currentX * 100) / rect.width)
-      const newY = round((currentY * 100) / rect.height)
+      const newX = round((currentX * 100) / bounds.width)
+      const newY = round((currentY * 100) / bounds.height)
 
       // Don't go below 0 or above 100
       const safeX = Math.max(0, Math.min(100, newX))
@@ -100,7 +92,6 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``,
     <Tooltip
       key={spot._key}
       disabled={isDragging}
-      boundaryElement={bounds.current}
       portal
       content={
         tooltip && typeof tooltip === 'function' ? (
