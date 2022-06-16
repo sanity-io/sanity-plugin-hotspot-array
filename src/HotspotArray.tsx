@@ -60,7 +60,7 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
 
     if (hotspotImage?.asset?._ref) {
       const {aspectRatio} = getImageDimensions(hotspotImage.asset._ref)
-      const width = 600
+      const width = 1200
       const height = Math.round(width / aspectRatio)
       const url = urlFor(hotspotImage).width(width).url()
 
@@ -122,8 +122,9 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
         <div style={{position: `relative`}}>
           {imageRect &&
             value?.length > 0 &&
-            value.map((spot) => (
+            value.map((spot, index) => (
               <Spot
+                index={index}
                 key={spot._key}
                 spot={spot}
                 bounds={imageRect}

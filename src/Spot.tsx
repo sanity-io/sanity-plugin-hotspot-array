@@ -1,33 +1,63 @@
-import {Box, Card, Text, Tooltip} from '@sanity/ui'
+import {Box, Text, Tooltip} from '@sanity/ui'
 import {motion, useMotionValue} from 'framer-motion'
 import get from 'lodash/get'
 import React, {CSSProperties, ReactElement, useEffect} from 'react'
 import {FnHotspotMove, TSpot} from './HotspotArray'
 
 const dragStyle: CSSProperties = {
-  width: '1rem',
-  height: '1rem',
+  width: '1.4rem',
+  height: '1.4rem',
   position: 'absolute',
   top: 0,
   left: 0,
-  margin: '-0.5rem 0 0 -0.5rem',
+  margin: '-0.7rem 0 0 -0.7rem',
   cursor: 'pointer',
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  borderRadius: '50%',
+  background: '#000',
+  color: 'white',
 }
 
 const dragStyleWhileDrag: CSSProperties = {
+  background: 'rgba(0, 0, 0, 0.1)',
+  border: '1px solid #fff',
   cursor: 'none',
 }
 
+const dragStyleWhileHover: CSSProperties = {
+  background: 'rgba(0, 0, 0, 0.1)',
+  border: '1px solid #fff',
+}
+
 const dotStyle: CSSProperties = {
-  width: 'inherit',
-  height: 'inherit',
+  position: 'absolute',
+  left: '50%',
+  top: '50%',
+  height: '0.2rem',
+  width: '0.2rem',
+  margin: '-0.1rem 0 0 -0.1rem',
+  background: '#fff',
+  visibility: 'hidden',
   borderRadius: '50%',
-  textAlign: 'center',
-  lineHeight: 1,
-  backgroundColor: 'rgba(255, 255, 255, 0.2)',
-  color: 'black',
   // make sure pointer events only run on the parent
   pointerEvents: 'none',
+}
+
+const dotStyleWhileActive: CSSProperties = {
+  visibility: 'visible',
+}
+
+const labelStyle: CSSProperties = {
+  color: 'white',
+  fontSize: '0.7rem',
+  fontWeight: 600,
+  lineHeight: '1',
+}
+
+const labelStyleWhileActive: CSSProperties = {
+  visibility: 'hidden',
 }
 
 const round = (num) => Math.round(num * 100) / 100
@@ -38,10 +68,20 @@ interface IHotspot {
   update: FnHotspotMove
   hotspotDescriptionPath?: string
   tooltip?: ReactElement
+  index: number
 }
 
-export default function Spot({spot, bounds, update, hotspotDescriptionPath, tooltip}: IHotspot) {
+export default function Spot({
+  spot,
+  bounds,
+  update,
+  hotspotDescriptionPath,
+  tooltip,
+  index,
+}: IHotspot) {
   const [isDragging, setIsDragging] = React.useState(false)
+  const [isHovering, setIsHovering] = React.useState(false)
+
   // x/y are stored as % but need to be converted to px
   const x = useMotionValue(round(bounds.width * (spot.x / 100)))
   const y = useMotionValue(round(bounds.height * (spot.y / 100)))
@@ -73,6 +113,9 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath, tool
   }, [spot])
   const handleDragStart = React.useCallback(() => setIsDragging(true), [])
 
+  const handleHoverStart = React.useCallback(() => setIsHovering(true), [])
+  const handleHoverEnd = React.useCallback(() => setIsHovering(false), [])
+
   if (!x || !y) {
     return null
   }
@@ -103,16 +146,32 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath, tool
         dragMomentum={false}
         onDragEnd={handleDragEnd}
         onDragStart={handleDragStart}
+        onHoverStart={handleHoverStart}
+        onHoverEnd={handleHoverEnd}
         style={{
           ...dragStyle,
           x,
           y,
           ...(isDragging && {...dragStyleWhileDrag}),
+          ...(isHovering && {...dragStyleWhileHover}),
         }}
       >
-        <Card tone="primary" shadow={3} style={dotStyle}>
-          ・
-        </Card>
+        {/* Dot */}
+        <Box
+          style={{
+            ...dotStyle,
+            ...((isDragging || isHovering) && {...dotStyleWhileActive}),
+          }}
+        />
+        {/* Label */}
+        <div
+          style={{
+            ...labelStyle,
+            ...((isDragging || isHovering) && {...labelStyleWhileActive}),
+          }}
+        >
+          {index + 1}
+        </div>
       </motion.div>
     </Tooltip>
   )
