@@ -62,14 +62,6 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath, tool
       const currentX = x.get()
       const currentY = y.get()
 
-      if (!Number(currentX) || !Number(currentY)) {
-        return console.warn(`Missing or non-number X or Y`, {currentX, currentY}, event.srcElement)
-      }
-
-      if (!bounds.width || !bounds.height) {
-        return console.warn(`Rect width/height not yet set`, {bounds})
-      }
-
       // Which we need to convert back to `%` to patch the document
       const newX = round((currentX * 100) / bounds.width)
       const newY = round((currentY * 100) / bounds.height)

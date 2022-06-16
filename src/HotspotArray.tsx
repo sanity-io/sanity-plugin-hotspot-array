@@ -91,11 +91,6 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
 
   const handleHotspotMove: FnHotspotMove = React.useCallback(
     (key, x, y) => {
-      if (!Number(x) || !Number(y)) {
-        console.warn(`Missing or non-number X or Y`, {x, y})
-        return
-      }
-
       onChange(
         PatchEvent.from(
           // Set the `x` value of this array key item
