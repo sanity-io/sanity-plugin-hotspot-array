@@ -1,5 +1,5 @@
 import { Box, Card, Text, Tooltip } from '@sanity/ui'
-import { motion } from 'framer-motion'
+import { motion, useMotionValue } from 'framer-motion'
 import get from 'lodash/get'
 import React, { CSSProperties } from 'react'
 
@@ -28,11 +28,13 @@ const dotStyle: CSSProperties = {
 	// make sure pointer events only run on the parent
 	pointerEvents: 'none',
 }
+
 const round = (num) => Math.round(num * 100) / 100
 
 export default function Spot({spot, bounds = undefined, update, hotspotDescriptionPath = ``, tooltip}) {
-  // x/y are stored as % but need to be displayed as px
-  const [{x, y}, setXY] = React.useState({x: 0, y: 0})
+  // x/y are stored as % but need to be converted to px
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
   const [rect, setRect] = React.useState(bounds?.current ? bounds.current.getBoundingClientRect() : {width: 0, height:0})
   const [isDragging, setIsDragging] = React.useState(false)
 
@@ -40,11 +42,10 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
     const clientRect = bounds?.current?.getBoundingClientRect()
 
     if (clientRect) {
+
       // So convert % to px once we know the height/width of the image
-      setXY({
-        x: round(clientRect.width * (spot.x / 100)),
-        y: round(clientRect.height * (spot.y / 100)),
-      })
+      x.set(round(clientRect.width * (spot.x / 100)))
+      y.set(round(clientRect.height * (spot.y / 100)))
 
       if (!rect.width || !rect.height) {
         setRect(clientRect)
@@ -56,16 +57,9 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
     (event) => {
       setIsDragging(false)
 
-      // I don't know why, but framer-motion doesn't give you the actual transform values
-      // So we have to regex the `px` values off the inline styles
-      const [currentX, currentY] = event.srcElement.style.transform.split(` `).map((v) => {
-        return v
-          ? v
-              .match(/\(([^)]+)\)/)
-              .pop()
-              .replace(`px`, ``)
-          : null
-      })
+      // get current values for x/y in px
+      const currentX = x.get()
+      const currentY = y.get()
 
       if (!Number(currentX) || !Number(currentY)) {
         return console.warn(`Missing or non-number X or Y`, {currentX, currentY}, event.srcElement)
@@ -114,7 +108,6 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
         dragConstraints={bounds}
         dragElastic={0}
         dragMomentum={false}
-        initial={{x, y}}
         onDragEnd={handleDragEnd}
         onDragStart={() => setIsDragging(true)}
         style={isDragging ? { ...dragStyle, ...dragStyleWhileDrag, x, y } : { ...dragStyle, x, y }}
