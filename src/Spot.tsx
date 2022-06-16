@@ -54,27 +54,24 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath, tool
     y.set(round(bounds.height * (spot.y / 100)))
   }, [bounds])
 
-  const handleDragEnd = React.useCallback(
-    (event) => {
-      setIsDragging(false)
+  const handleDragEnd = React.useCallback(() => {
+    setIsDragging(false)
 
-      // get current values for x/y in px
-      const currentX = x.get()
-      const currentY = y.get()
+    // get current values for x/y in px
+    const currentX = x.get()
+    const currentY = y.get()
 
-      // Which we need to convert back to `%` to patch the document
-      const newX = round((currentX * 100) / bounds.width)
-      const newY = round((currentY * 100) / bounds.height)
+    // Which we need to convert back to `%` to patch the document
+    const newX = round((currentX * 100) / bounds.width)
+    const newY = round((currentY * 100) / bounds.height)
 
-      // Don't go below 0 or above 100
-      const safeX = Math.max(0, Math.min(100, newX))
-      const safeY = Math.max(0, Math.min(100, newY))
+    // Don't go below 0 or above 100
+    const safeX = Math.max(0, Math.min(100, newX))
+    const safeY = Math.max(0, Math.min(100, newY))
 
-      update(spot._key, safeX, safeY)
-    },
-
-    [spot]
-  )
+    update(spot._key, safeX, safeY)
+  }, [spot])
+  const handleDragStart = React.useCallback(() => setIsDragging(true), [])
 
   if (!x || !y) {
     return null
@@ -105,8 +102,13 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath, tool
         dragElastic={0}
         dragMomentum={false}
         onDragEnd={handleDragEnd}
-        onDragStart={() => setIsDragging(true)}
-        style={isDragging ? {...dragStyle, ...dragStyleWhileDrag, x, y} : {...dragStyle, x, y}}
+        onDragStart={handleDragStart}
+        style={{
+          ...dragStyle,
+          x,
+          y,
+          ...(isDragging && {...dragStyleWhileDrag}),
+        }}
       >
         <Card tone="primary" shadow={3} style={dotStyle}>
           ・
