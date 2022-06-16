@@ -2,13 +2,13 @@
 
 A configurable Custom Input for Arrays that will add and update items by clicking on an Image
 
+<img src="https://user-images.githubusercontent.com/209129/174171697-57319ebc-03a7-4d82-a73e-b6effcb0b3ba.gif" width="600" />
+
 ## Installation
 
 ```
 sanity install hotspot-array
 ```
-
-![2021-12-22 15 07 58](https://user-images.githubusercontent.com/9684022/147113578-d49d747a-4904-45b4-b4e0-409b33832226.gif)
 
 ## Setup
 
