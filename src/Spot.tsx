@@ -4,29 +4,29 @@ import get from 'lodash/get'
 import React, { CSSProperties } from 'react'
 
 const dragStyle: CSSProperties = {
-	width: '1rem',
-	height: '1rem',
-	position: 'absolute',
-	top: 0,
-	left: 0,
-	margin: '-0.5rem 0 0 -0.5rem',
-	cursor: 'pointer',
+  width: '1rem',
+  height: '1rem',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  margin: '-0.5rem 0 0 -0.5rem',
+  cursor: 'pointer',
 }
 
 const dragStyleWhileDrag: CSSProperties = {
-	cursor: 'none',
+  cursor: 'none',
 }
 
 const dotStyle: CSSProperties = {
-	width: 'inherit',
-	height: 'inherit',
-	borderRadius: '50%',
-	textAlign: 'center',
-	lineHeight: 1,
-	backgroundColor: 'rgba(255, 255, 255, 0.2)',
-	color: 'black',
-	// make sure pointer events only run on the parent
-	pointerEvents: 'none',
+  width: 'inherit',
+  height: 'inherit',
+  borderRadius: '50%',
+  textAlign: 'center',
+  lineHeight: 1,
+  backgroundColor: 'rgba(255, 255, 255, 0.2)',
+  color: 'black',
+  // make sure pointer events only run on the parent
+  pointerEvents: 'none',
 }
 
 const round = (num) => Math.round(num * 100) / 100
