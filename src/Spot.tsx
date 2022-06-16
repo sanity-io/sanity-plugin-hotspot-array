@@ -112,6 +112,7 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
       <motion.div
         drag
         dragConstraints={bounds}
+        dragElastic={0}
         dragMomentum={false}
         initial={{x, y}}
         onDragEnd={handleDragEnd}
