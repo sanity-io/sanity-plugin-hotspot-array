@@ -3,7 +3,7 @@ import React from 'react'
 export function useUnsetInputComponent(type, component) {
     return React.useMemo(() => unsetInputComponent(type, component), [type, component])
   }
-  
+
   function unsetInputComponent(type, component) {
     const t = {
       ...type,

@@ -1,7 +1,7 @@
-import React from 'react'
-import {Box, Card, Text, Tooltip} from '@sanity/ui'
-import {motion} from 'framer-motion'
+import { Box, Card, Text, Tooltip } from '@sanity/ui'
+import { motion } from 'framer-motion'
 import get from 'lodash/get'
+import React from 'react'
 
 const dragStyle = {
   width: `1rem`,
@@ -66,7 +66,7 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
       // Which we need to convert back to `%` to patch the document
       const newX = round((currentX * 100) / rect.width)
       const newY = round((currentY * 100) / rect.height)
-      
+
       // Don't go below 0 or above 100
       const safeX = Math.max(0, Math.min(100, newX))
       const safeY = Math.max(0, Math.min(100, newY))

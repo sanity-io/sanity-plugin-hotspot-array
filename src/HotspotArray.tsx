@@ -3,20 +3,20 @@
 // @ts-ignore
 import sanityClient from 'part:@sanity/base/client'
 // @ts-ignore
-import {withDocument} from 'part:@sanity/form-builder'
+import { withDocument } from 'part:@sanity/form-builder'
 
-import React from 'react'
-import {Card, Flex, Stack, Text} from '@sanity/ui'
-import {FormBuilderInput} from '@sanity/form-builder/lib/FormBuilderInput'
-import {randomKey} from '@sanity/util/content'
-import {PatchEvent, setIfMissing, set, insert} from '@sanity/form-builder/PatchEvent'
+import { getImageDimensions } from '@sanity/asset-utils'
+import { FormBuilderInput } from '@sanity/form-builder/lib/FormBuilderInput'
+import { insert, PatchEvent, set, setIfMissing } from '@sanity/form-builder/PatchEvent'
 import imageUrlBuilder from '@sanity/image-url'
-import {getImageDimensions} from '@sanity/asset-utils'
+import { Card, Flex, Stack } from '@sanity/ui'
+import { randomKey } from '@sanity/util/content'
 import get from 'lodash/get'
+import React from 'react'
 
+import Feedback from './Feedback'
 import Spot from './Spot'
 import { useUnsetInputComponent } from './useUnsetInputComponent'
-import Feedback from './Feedback'
 
 const imageStyle = {width: `100%`, height: `auto`}
 
