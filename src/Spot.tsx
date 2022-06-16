@@ -98,7 +98,7 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``,
           React.createElement(tooltip, {spot})
         ) : (
           <Box padding={2} style={{maxWidth: 200, pointerEvents: `none`}}>
-            <Text textOverflow="ellipsis">{hotspotDescriptionPath ? get(spot, hotspotDescriptionPath) : `${spot.x}% x ${spot.y}%`}</Text>
+            <Text textOverflow="ellipsis">{hotspotDescriptionPath ? get(spot, hotspotDescriptionPath) as string : `${spot.x}% x ${spot.y}%`}</Text>
           </Box>
         )
       }
