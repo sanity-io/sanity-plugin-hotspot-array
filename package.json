@@ -41,7 +41,7 @@
     "eslint-config-prettier": "^8.5.0",
     "eslint-config-sanity": "^6.0.0",
     "eslint-plugin-react": "^7.30.0",
-    "pinst": "^3.0.0",
+    "pinst": "^2.1.6",
     "prettier": "^2.7.0",
     "sanipack": "^2.1.0"
   },
