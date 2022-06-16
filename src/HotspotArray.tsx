@@ -30,7 +30,7 @@ export type TSpot = {
   _type: `spot`
   x: number
   y: number
-} & { [key: string]: unknown }
+} & {[key: string]: unknown}
 
 const HotspotArray = React.forwardRef((props: any, ref) => {
   const {type, value, onChange, document, parent} = props
@@ -39,7 +39,13 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
   // Attempt prevention of infinite loop in <FormBuilderInput />
   // Re-renders can still occur if this Component is used again in a nested field
   const typeWithoutInputComponent = useUnsetInputComponent(type, type?.inputComponent)
-  const imageHotspotPathRoot = React.useMemo(() => (VALID_ROOT_PATHS.includes(options?.imageHotspotPathRoot) ? props[options.imageHotspotPathRoot] : document), [])
+  const imageHotspotPathRoot = React.useMemo(
+    () =>
+      VALID_ROOT_PATHS.includes(options?.imageHotspotPathRoot)
+        ? props[options.imageHotspotPathRoot]
+        : document,
+    []
+  )
 
   // Finding the image from the imageHotspotPathRoot (defaults to document),
   // using the path from the hotspot's `options` field
@@ -105,14 +111,19 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
   const hotspotImageRef = React.useRef<HTMLImageElement | null>(null)
 
   const [imageRect, setImageRect] = useState<DOMRectReadOnly>()
-  const updateImageRectCallback = useDebouncedCallback(((e) => setImageRect(e.contentRect)) as IUseResizeObserverCallback, [setImageRect], 200)
+  const updateImageRectCallback = useDebouncedCallback(
+    ((e) => setImageRect(e.contentRect)) as IUseResizeObserverCallback,
+    [setImageRect],
+    200
+  )
   useResizeObserver(hotspotImageRef, updateImageRectCallback)
 
   return (
-    <Stack space={[2,2,3]}>
+    <Stack space={[2, 2, 3]}>
       {displayImage?.url ? (
         <div style={{position: `relative`}}>
-          {imageRect && value?.length > 0 &&
+          {imageRect &&
+            value?.length > 0 &&
             value.map((spot) => (
               <Spot
                 key={spot._key}
@@ -134,22 +145,31 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
                 alt=""
                 style={imageStyle}
                 onClick={handleHotspotImageClick}
-                />
+              />
             </Flex>
           </Card>
         </div>
       ) : (
         <Feedback>
-            {type?.options?.hotspotImagePath
-              ? <>No Hotspot image found at path <code>{type?.options?.hotspotImagePath}</code></>
-              : <>Define a path in this field using to the image field in this document at <code>options.hotspotImagePath</code></>
-            }
-          </Feedback>
+          {type?.options?.hotspotImagePath ? (
+            <>
+              No Hotspot image found at path <code>{type?.options?.hotspotImagePath}</code>
+            </>
+          ) : (
+            <>
+              Define a path in this field using to the image field in this document at{' '}
+              <code>options.hotspotImagePath</code>
+            </>
+          )}
+        </Feedback>
       )}
-        {type?.options?.imageHotspotPathRoot && !VALID_ROOT_PATHS.includes(type.options.imageHotspotPathRoot) &&
-        <Feedback>
-            The supplied imageHotspotPathRoot "{type.options.imageHotspotPathRoot}" is not valid, falling back to "document". Available values are "{VALID_ROOT_PATHS.join(', ')}".
-        </Feedback>}
+      {type?.options?.imageHotspotPathRoot &&
+        !VALID_ROOT_PATHS.includes(type.options.imageHotspotPathRoot) && (
+          <Feedback>
+            The supplied imageHotspotPathRoot "{type.options.imageHotspotPathRoot}" is not valid,
+            falling back to "document". Available values are "{VALID_ROOT_PATHS.join(', ')}".
+          </Feedback>
+        )}
       <FormBuilderInput {...props} type={typeWithoutInputComponent} ref={ref} />
     </Stack>
   )

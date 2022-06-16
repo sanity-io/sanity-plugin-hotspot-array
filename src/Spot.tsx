@@ -40,7 +40,7 @@ interface IHotspot {
   tooltip?: ReactElement
 }
 
-export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``, tooltip}: IHotspot) {
+export default function Spot({spot, bounds, update, hotspotDescriptionPath, tooltip}: IHotspot) {
   const [isDragging, setIsDragging] = React.useState(false)
   // x/y are stored as % but need to be converted to px
   const x = useMotionValue(round(bounds.width * (spot.x / 100)))
@@ -49,7 +49,7 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``,
   /**
    * update x/y if the bounds change when resizing the window
    */
-   useEffect(() => {
+  useEffect(() => {
     x.set(round(bounds.width * (spot.x / 100)))
     y.set(round(bounds.height * (spot.y / 100)))
   }, [bounds])
@@ -67,7 +67,7 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``,
       }
 
       if (!bounds.width || !bounds.height) {
-        return console.warn(`Rect width/height not yet set`, { bounds })
+        return console.warn(`Rect width/height not yet set`, {bounds})
       }
 
       // Which we need to convert back to `%` to patch the document
@@ -98,7 +98,11 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``,
           React.createElement(tooltip, {spot})
         ) : (
           <Box padding={2} style={{maxWidth: 200, pointerEvents: `none`}}>
-            <Text textOverflow="ellipsis">{hotspotDescriptionPath ? get(spot, hotspotDescriptionPath) as string : `${spot.x}% x ${spot.y}%`}</Text>
+            <Text textOverflow="ellipsis">
+              {hotspotDescriptionPath
+                ? (get(spot, hotspotDescriptionPath) as string)
+                : `${spot.x}% x ${spot.y}%`}
+            </Text>
           </Box>
         )
       }
@@ -110,7 +114,7 @@ export default function Spot({spot, bounds, update, hotspotDescriptionPath = ``,
         dragMomentum={false}
         onDragEnd={handleDragEnd}
         onDragStart={() => setIsDragging(true)}
-        style={isDragging ? { ...dragStyle, ...dragStyleWhileDrag, x, y } : { ...dragStyle, x, y }}
+        style={isDragging ? {...dragStyle, ...dragStyleWhileDrag, x, y} : {...dragStyle, x, y}}
       >
         <Card tone="primary" shadow={3} style={dotStyle}>
           ・
