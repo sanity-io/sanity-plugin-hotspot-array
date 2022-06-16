@@ -1,21 +1,33 @@
 import { Box, Card, Text, Tooltip } from '@sanity/ui'
 import { motion } from 'framer-motion'
 import get from 'lodash/get'
-import React from 'react'
+import React, { CSSProperties } from 'react'
 
-const dragStyle = {
-  width: `1rem`,
-  height: `1rem`,
-  position: `absolute`,
+const dragStyle: CSSProperties = {
+	width: '1rem',
+	height: '1rem',
+	position: 'absolute',
+	top: 0,
+	left: 0,
+	margin: '-0.5rem 0 0 -0.5rem',
+	cursor: 'pointer',
 }
 
-const dotStyle = {
-  ...dragStyle,
-  borderRadius: `50%`,
-  // make sure pointer events only run on the parent
-  pointerEvents: `none`,
+const dragStyleWhileDrag: CSSProperties = {
+	cursor: 'none',
 }
 
+const dotStyle: CSSProperties = {
+	width: 'inherit',
+	height: 'inherit',
+	borderRadius: '50%',
+	textAlign: 'center',
+	lineHeight: 1,
+	backgroundColor: 'rgba(255, 255, 255, 0.2)',
+	color: 'black',
+	// make sure pointer events only run on the parent
+	pointerEvents: 'none',
+}
 const round = (num) => Math.round(num * 100) / 100
 
 export default function Spot({spot, bounds = undefined, update, hotspotDescriptionPath = ``, tooltip}) {
@@ -104,9 +116,11 @@ export default function Spot({spot, bounds = undefined, update, hotspotDescripti
         initial={{x, y}}
         onDragEnd={handleDragEnd}
         onDragStart={() => setIsDragging(true)}
-        style={dragStyle}
+        style={isDragging ? { ...dragStyle, ...dragStyleWhileDrag, x, y } : { ...dragStyle, x, y }}
       >
-        <Card tone="primary" shadow={3} style={dotStyle} />
+        <Card tone="primary" shadow={3} style={dotStyle}>
+          ・
+        </Card>
       </motion.div>
     </Tooltip>
   )
