@@ -27,7 +27,7 @@
     "build": "parcel build --no-cache",
     "watch": "parcel watch",
     "prepublishOnly": "npm run build",
-    "lint": "eslint .",
+    "lint": "eslint src/**/*",
     "lint:fix": "eslint . --fix",
     "clean": "rimraf lib",
     "prebuild": "npm run clean && plugin-kit verify-package --silent",
