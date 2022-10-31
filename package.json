@@ -49,7 +49,8 @@
     "@sanity/image-url": "1.0.1",
     "@sanity/util": "2.29.5",
     "lodash": "4.17.21",
-    "react": "^17.0.2"
+    "react": "^17",
+    "react-dom": "^17"
   },
   "bugs": {
     "url": "https://github.com/SimeonGriggs/sanity-plugin-hotspot-array/issues"
