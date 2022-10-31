@@ -27,44 +27,61 @@ yarn add sanity-plugin-hotspot-array@studio-v3
 
 ## Usage
 
-Import the `HotspotArray` component from this package, into your schema. And insert it as the `inputComponent` of an `array` field.
+Add it as a plugin in sanity.config.ts (or .js):
 
 ```js
-import HotspotArray from 'sanity-plugin-hotspot-array'
+import { imageHotspotArray } from "sanity-plugin-hotspot-array";
 
-export default {
+export default createConfig({
+  // ...
+  plugins: [
+    imageHotspotArray(),
+  ] 
+})
+```
+
+Now you will have `imageHotspot` available as an options on `array` fields:
+
+```js
+import {defineType, defineField} from 'sanity'
+
+export const productSchema = defineType({
   name: `product`,
   title: `Product`,
   type: `document`,
   fields: [
-    {
+    defineField({
       name: `hotspots`,
       type: `array`,
-      inputComponent: HotspotArray,
       of: [
         // see `Spot object` setup below
       ],
       options: {
-        // see `Image and description path` setup below
-        hotspotImagePath: `featureImage`,
-        hotspotDescriptionPath: `details`,
-        // see `Custom tooltip` setup below
-        hotspotTooltip: undefined,
+        // plugin adds support for this option
+        imageHotspot: {
+          // see `Image and description path` setup below
+          imagePath: `featureImage`,
+          descriptionPath: `details`,
+          // see `Custom tooltip` setup below
+          tooltip: undefined,
+        }
       },
-    },
+    }),
     // ...all your other fields
+    // ...of which one should be featureImage in this example
   ],
-}
+})
 ```
+There is no need to provide an explicit input component, as that is handled by the plugin.
 
 The plugin makes a number of assumptions to add and update data in the array. Including:
 
-- The `array` field is an array of objects
+- The `array` field is an array of objects, with a single object type
 - The object contains two number fields named `x` and `y`
 - You'll want to save those values as % from the top left of the image
 - The same document contains the image you want to add hotspots to
 
-### Image and description paths
+### Image path
 
 The custom input has the current values of all fields in the document, and so can "pick" the image out of the document by its path.
 
@@ -72,15 +89,31 @@ For example, if you want to add hotspots to an image, and that image is uploaded
 
 ```js
 options: {
-  hotspotImagePath: `featureImage`
+  imageHotspot: {
+    imagePath: `featureImage`
+  }
 }
 ```
 
-The custom input can also pre-fill a string or text field with a description of the position of the spot to make them easier to identify. Add a path **relative to the spot object** for this field.
+To pick the image out of the hotspot-array parent object, use
+```js
+options: {
+  imageHotspot: {
+    pathRoot: 'parent'
+  }
+}
+```
+
+### Description path
+
+The custom input can also pre-fill a string or text field with a description of the position of the spot to make them easier to identify.
+Add a path **relative to the spot object** for this field.
 
 ```js
 options: {
-  hotspotDescriptionPath: `details`
+  imageHotspot: {
+    descriptionPath: `details`
+  }
 }
 ```
 
@@ -89,7 +122,7 @@ options: {
 Here's an example object schema complete with initial values, validation, fieldsets and a styled preview.
 
 ```js
-{
+defineField({
   name: 'spot',
   type: 'object',
   fieldsets: [{name: 'position', options: {columns: 2}}],
@@ -125,28 +158,66 @@ Here's an example object schema complete with initial values, validation, fields
       }
     },
   },
-}
+})
 ```
 
 ## Custom tooltip
 
-You can customise the Tooltip to display any Component, it will accept a single prop `spot` which contains the values of the object.
+You can customise the Tooltip to display any Component, which will receive `value` (the hotspot value with x and y),
+`schemaType` (schemaType of the hotspot value), and `renderPreview` (callback for rendering Studio preview).
 
-In this example our `spot` object has a `reference` field to the `product` schema type, and will show a Document Preview.
+### Example 1 - use default hotspot preview
+
+```tsx
+import { Box } from "@sanity/ui";
+import { HotspotTooltipProps } from "sanity-plugin-hotspot-array";
+
+export function HotspotPreview({
+  value,
+  schemaType,
+  renderPreview,
+}: HotspotTooltipProps) {
+  return (
+    <Box padding={2} style={{ minWidth: 200 }}>
+      {renderPreview({
+        value,
+        schemaType,
+        layout: "default",
+      })}
+    </Box>
+  );
+}
+```
+
+Then back in your schema definition
 
 ```js
-// Setup a custom tooltip component
-import Preview from 'part:@sanity/base/preview'
-import schema from 'part:@sanity/base/schema'
+options: {
+  imageHotspot: {
+    tooltip: HotspotPreview
+  }
+}
+```
+
+### Example 2 - reference value in hotspot
+In this example our `value` object has a `reference` field to the `product` schema type, and will show a document preview.
+
+```jsx
+import {useSchema }from 'sanity'
 import {Box} from '@sanity/ui'
 
-export default function ProductPreview({spot}) {
+export function ProductPreview({value, renderPreview}) {
+  const productSchemaType = useSchema().get('product')
   return (
     <Box padding={2} style={{minWidth: 200}}>
-      {spot?.product?._ref ? (
-        <Preview value={{_id: spot.product._ref}} type={schema.get(`product`)} />
+      {value?.product?._ref ? (
+        renderPreview({
+           value,
+           schemaType: productSchemaType,
+           layout: "default"
+        })
       ) : (
-        `No Reference Selected`
+        `No reference selected`
       )}
     </Box>
   )
@@ -156,13 +227,11 @@ export default function ProductPreview({spot}) {
 Then back in your schema definition
 
 ```js
-import HotspotArray from 'sanity-plugin-hotspot-array'
-import ProductPreview from '../../components/ProductPreview'
-
 options: {
- hotspotImagePath: `hotspotImage`,
- hotspotTooltip: ProductPreview,
-},
+  imageHotspot: {
+    tooltip: ProductPreview
+  }
+}
 ```
 
 ## License

@@ -1,8 +1,10 @@
+/* eslint-disable */
 import {Box, Text, Tooltip} from '@sanity/ui'
 import {motion, useMotionValue} from 'framer-motion'
 import get from 'lodash/get'
-import React, {CSSProperties, ReactElement, useEffect} from 'react'
-import {FnHotspotMove, TSpot} from './HotspotArray'
+import React, {ComponentType, CSSProperties, ReactElement, useEffect} from 'react'
+import {FnHotspotMove, HotspotItem} from './ImageHotspotArray'
+import {ObjectSchemaType, RenderPreviewCallback} from 'sanity'
 
 const dragStyle: CSSProperties = {
   width: '1.4rem',
@@ -61,39 +63,49 @@ const labelStyleWhileActive: CSSProperties = {
   visibility: 'hidden',
 }
 
-const round = (num) => Math.round(num * 100) / 100
+const round = (num: number) => Math.round(num * 100) / 100
 
-interface IHotspot {
-  spot: TSpot
+export interface HotspotTooltipProps<HotspotFields = {[key: string]: unknown}> {
+  value: HotspotItem<HotspotFields>
+  schemaType: ObjectSchemaType
+  renderPreview: RenderPreviewCallback
+}
+
+interface HotspotProps<HotspotFields = {[key: string]: unknown}> {
+  value: HotspotItem
   bounds: DOMRectReadOnly
   update: FnHotspotMove
   hotspotDescriptionPath?: string
-  tooltip?: ReactElement
+  tooltip?: ComponentType<HotspotTooltipProps<HotspotFields>>
   index: number
+  schemaType: ObjectSchemaType
+  renderPreview: RenderPreviewCallback
 }
 
 export default function Spot({
-  spot,
+  value,
   bounds,
   update,
   hotspotDescriptionPath,
   tooltip,
   index,
-}: IHotspot) {
+  schemaType,
+  renderPreview,
+}: HotspotProps) {
   const [isDragging, setIsDragging] = React.useState(false)
   const [isHovering, setIsHovering] = React.useState(false)
 
   // x/y are stored as % but need to be converted to px
-  const x = useMotionValue(round(bounds.width * (spot.x / 100)))
-  const y = useMotionValue(round(bounds.height * (spot.y / 100)))
+  const x = useMotionValue(round(bounds.width * (value.x / 100)))
+  const y = useMotionValue(round(bounds.height * (value.y / 100)))
 
   /**
    * update x/y if the bounds change when resizing the window
    */
   useEffect(() => {
-    x.set(round(bounds.width * (spot.x / 100)))
-    y.set(round(bounds.height * (spot.y / 100)))
-  }, [bounds])
+    x.set(round(bounds.width * (value.x / 100)))
+    y.set(round(bounds.height * (value.y / 100)))
+  }, [x, y, value, bounds])
 
   const handleDragEnd = React.useCallback(() => {
     setIsDragging(false)
@@ -110,8 +122,8 @@ export default function Spot({
     const safeX = Math.max(0, Math.min(100, newX))
     const safeY = Math.max(0, Math.min(100, newY))
 
-    update(spot._key, safeX, safeY)
-  }, [spot])
+    update(value._key, safeX, safeY)
+  }, [x, y, value, update, bounds])
   const handleDragStart = React.useCallback(() => setIsDragging(true), [])
 
   const handleHoverStart = React.useCallback(() => setIsHovering(true), [])
@@ -123,18 +135,18 @@ export default function Spot({
 
   return (
     <Tooltip
-      key={spot._key}
+      key={value._key}
       disabled={isDragging}
       portal
       content={
         tooltip && typeof tooltip === 'function' ? (
-          React.createElement(tooltip, {spot})
+          React.createElement(tooltip, {value, renderPreview, schemaType})
         ) : (
           <Box padding={2} style={{maxWidth: 200, pointerEvents: `none`}}>
             <Text textOverflow="ellipsis">
               {hotspotDescriptionPath
-                ? (get(spot, hotspotDescriptionPath) as string)
-                : `${spot.x}% x ${spot.y}%`}
+                ? (get(value, hotspotDescriptionPath) as string)
+                : `${value.x}% x ${value.y}%`}
             </Text>
           </Box>
         )
