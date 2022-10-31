@@ -30,7 +30,8 @@ export default {
         // see `Spot object` setup below
       ],
       options: {
-        // see `Image and description path` setup below
+        // see `Image and description paths` setup below
+        imageHotspotPathRoot: `document`,
         hotspotImagePath: `featureImage`,
         hotspotDescriptionPath: `details`,
         // see `Custom tooltip` setup below
@@ -51,12 +52,23 @@ The plugin makes a number of assumptions to add and update data in the array. In
 
 ### Image and description paths
 
-The custom input has the current values of all fields in the document, and so can "pick" the image out of the document by its path.
+The custom input has the current values of all fields in the document by default, and so can "pick" the image out of the document by its path.
 
-For example, if you want to add hotspots to an image, and that image is uploaded to the field `featuredImage`, your fields `options` would look like:
+For example, if you want to add hotspots to an image, and that image is uploaded to the document field of `featuredImage`, your fields `options` would look like:
 
 ```js
 options: {
+  hotspotImagePath: `featureImage`
+}
+```
+
+Alternatively, you may supply 'parent' to the `imageHotspotPathRoot` option to pick from the parent object instead. Using 'parent' as `imageHotspotPathRoot` in favor of the default 'document' may be required, e.g. if your schema of hotspots array is defined as a child of another array, and therefore you can not reference dynamically the correct field in a 'document' specified by `hotspotImagePath`.
+
+In this case, if the image is uploaded to the parent object field of `featuredImage`, your fields `options` would look like:
+
+```js
+options: {
+  imageHotspotPathRoot: `parent`,
   hotspotImagePath: `featureImage`
 }
 ```
