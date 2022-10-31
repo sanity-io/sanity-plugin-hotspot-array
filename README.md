@@ -1,5 +1,13 @@
 # sanity-plugin-hotspot-array
 
+> > **NOTE**
+>
+> This is the **Sanity Studio v3 version** of sanity-plugin-hotspot-array.
+>
+> For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-hotspot-array).
+
+## What is it?
+
 A configurable Custom Input for Arrays that will add and update items by clicking on an Image
 
 <img src="https://user-images.githubusercontent.com/209129/174171697-57319ebc-03a7-4d82-a73e-b6effcb0b3ba.gif" width="600" />
@@ -7,10 +15,17 @@ A configurable Custom Input for Arrays that will add and update items by clickin
 ## Installation
 
 ```
-sanity install hotspot-array
+npm install --save sanity-plugin-hotspot-array@studio-v3
 ```
 
-## Setup
+or
+
+```
+yarn add sanity-plugin-hotspot-array@studio-v3
+```
+
+
+## Usage
 
 Import the `HotspotArray` component from this package, into your schema. And insert it as the `inputComponent` of an `array` field.
 
@@ -152,5 +167,19 @@ options: {
 
 ## License
 
-MIT © Simeon Griggs
-See LICENSE
+MIT-licensed. See LICENSE.
+
+## Develop & test
+
+This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
+with default configuration for build & watch scripts.
+
+See [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio)
+on how to run this plugin with hotreload in the studio.
+
+### Release new version
+
+Run ["CI & Release" workflow](https://github.com/sanity-io/sanity-plugin-hotspot-array/actions/workflows/main.yml).
+Make sure to select the main branch and check "Release new version".
+
+Semantic release will only release on configured branches, so it is safe to run release on any branch.
