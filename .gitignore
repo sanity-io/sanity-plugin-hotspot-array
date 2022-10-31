@@ -52,3 +52,8 @@ package-lock.json
 # Compiled plugin
 /lib
 
+.parcel-cache
+
+*.iml
+.idea
+
