@@ -21,7 +21,7 @@ import React, {useCallback, useMemo, useRef, useState} from 'react'
 import {IUseResizeObserverCallback, useDebouncedCallback, useResizeObserver} from '@react-hookz/web'
 import Feedback from './Feedback'
 import Spot from './Spot'
-import {ImageHotspotOptions} from './index'
+import {ImageHotspotOptions} from './plugin'
 
 const imageStyle = {width: `100%`, height: `auto`}
 

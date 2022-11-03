@@ -32,7 +32,7 @@ Add it as a plugin in sanity.config.ts (or .js):
 ```js
 import { imageHotspotArray } from "sanity-plugin-hotspot-array";
 
-export default createConfig({
+export default defineConfig({
   // ...
   plugins: [
     imageHotspotArray(),
