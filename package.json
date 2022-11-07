@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-hotspot-array",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "A configurable Custom Input for Arrays that will add and update items by clicking on an Image",
   "main": "lib/HotspotArray.js",
   "scripts": {
@@ -19,13 +19,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/SimeonGriggs/sanity-plugin-hotspot-array.git"
+    "url": "git+ssh://git@github.com/sanity-io/sanity-plugin-hotspot-array.git"
   },
   "keywords": [
     "sanity",
     "sanity-plugin"
   ],
-  "author": "Simeon Griggs <simeon@sanity.io>",
+  "author": "Sanity.io <hello@sanity.io>",
   "license": "MIT",
   "dependencies": {
     "@react-hookz/web": "^14.2.2",
@@ -53,9 +53,9 @@
     "react-dom": "^17"
   },
   "bugs": {
-    "url": "https://github.com/SimeonGriggs/sanity-plugin-hotspot-array/issues"
+    "url": "https://github.com/sanity-io/sanity-plugin-hotspot-array/issues"
   },
-  "homepage": "https://github.com/SimeonGriggs/sanity-plugin-hotspot-array#readme",
+  "homepage": "https://github.com/sanity-io/sanity-plugin-hotspot-array#readme",
   "prettier": {
     "semi": false,
     "printWidth": 100,

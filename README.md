@@ -164,5 +164,5 @@ options: {
 
 ## License
 
-MIT © Simeon Griggs
+MIT ©
 See LICENSE
