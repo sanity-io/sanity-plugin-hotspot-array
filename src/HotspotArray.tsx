@@ -6,7 +6,6 @@ import sanityClient from 'part:@sanity/base/client'
 import {withDocument} from 'part:@sanity/form-builder'
 
 import {getImageDimensions} from '@sanity/asset-utils'
-import {FormBuilderInput} from '@sanity/form-builder/lib/FormBuilderInput'
 import {insert, PatchEvent, set, setIfMissing} from '@sanity/form-builder/PatchEvent'
 import imageUrlBuilder from '@sanity/image-url'
 import {Card, Flex, Stack} from '@sanity/ui'
@@ -18,6 +17,7 @@ import {IUseResizeObserverCallback, useDebouncedCallback, useResizeObserver} fro
 import Feedback from './Feedback'
 import Spot from './Spot'
 import {useUnsetInputComponent} from './useUnsetInputComponent'
+import { NestedFormBuilder } from './NestedFormBuilder'
 
 const imageStyle = {width: `100%`, height: `auto`}
 
@@ -33,6 +33,7 @@ export type TSpot = {
 } & {[key: string]: unknown}
 
 const HotspotArray = React.forwardRef((props: any, ref) => {
+  console.log(props);
   const {type, value, onChange, document} = props
   const {options} = type ?? {}
 
@@ -169,7 +170,7 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
             falling back to "document". Available values are "{VALID_ROOT_PATHS.join(', ')}".
           </Feedback>
         )}
-      <FormBuilderInput {...props} type={typeWithoutInputComponent} ref={ref} />
+      <NestedFormBuilder {...props} type={typeWithoutInputComponent} ref={ref} />
     </Stack>
   )
 })
