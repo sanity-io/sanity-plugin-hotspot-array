@@ -3,7 +3,7 @@
 // @ts-ignore
 import sanityClient from 'part:@sanity/base/client'
 // @ts-ignore
-import {withDocument} from 'part:@sanity/form-builder'
+import {withDocument, withParent} from 'part:@sanity/form-builder'
 
 import {getImageDimensions} from '@sanity/asset-utils'
 import {insert, PatchEvent, set, setIfMissing} from '@sanity/form-builder/PatchEvent'
@@ -175,4 +175,4 @@ const HotspotArray = React.forwardRef((props: any, ref) => {
   )
 })
 
-export default withDocument(HotspotArray)
+export default withParent(withDocument(HotspotArray))
