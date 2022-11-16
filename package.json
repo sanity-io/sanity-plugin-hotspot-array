@@ -15,7 +15,7 @@
     "url": "git@github.com:sanity-io/sanity-plugin-hotspot-array.git"
   },
   "license": "MIT",
-  "author": "Simeon Griggs <simeon@sanity.io>",
+  "author": "Sanity.io <hello@sanity.io>",
   "exports": {
     ".": {
       "types": "./lib/src/index.d.ts",
