@@ -1,5 +1,8 @@
 # sanity-plugin-hotspot-array
 
+> This is a **Sanity Studio v2** plugin. 
+> For the v3 version, please refer to the [v3-branch](https://github.com/sanity-io/sanity-plugin-hotspot-array).
+
 A configurable Custom Input for Arrays that will add and update items by clicking on an Image
 
 <img src="https://user-images.githubusercontent.com/209129/174171697-57319ebc-03a7-4d82-a73e-b6effcb0b3ba.gif" width="600" />
@@ -7,7 +10,7 @@ A configurable Custom Input for Arrays that will add and update items by clickin
 ## Installation
 
 ```
-sanity install hotspot-array
+sanity install hotspot-array@studio-v2
 ```
 
 ## Setup
