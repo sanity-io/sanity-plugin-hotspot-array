@@ -1,10 +1,7 @@
 # sanity-plugin-hotspot-array
 
-> > **NOTE**
->
-> This is the **Sanity Studio v3 version** of sanity-plugin-hotspot-array.
->
-> For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-hotspot-array).
+>This is a **Sanity Studio v3** plugin.
+> For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-hotspot-array/tree/studio-v2).
 
 ## What is it?
 
@@ -15,13 +12,13 @@ A configurable Custom Input for Arrays that will add and update items by clickin
 ## Installation
 
 ```
-npm install --save sanity-plugin-hotspot-array@studio-v3
+npm install --save sanity-plugin-hotspot-array
 ```
 
 or
 
 ```
-yarn add sanity-plugin-hotspot-array@studio-v3
+yarn add sanity-plugin-hotspot-array
 ```
 
 

@@ -52,7 +52,7 @@
     "@sanity/asset-utils": "^1.2.3",
     "@sanity/incompatible-plugin": "^1.0.4",
     "@sanity/ui": "1.0.0-beta.32",
-    "@sanity/util": "3.0.0-rc.0",
+    "@sanity/util": "3.0.0-rc.2",
     "framer-motion": "^6.3.11"
   },
   "devDependencies": {
@@ -76,14 +76,14 @@
     "prettier-plugin-packagejson": "^2.3.0",
     "react": "^18",
     "rimraf": "^3.0.2",
-    "sanity": "3.0.0-rc.0",
+    "sanity": "3.0.0-rc.2",
     "typescript": "^4.8.4"
   },
   "peerDependencies": {
     "@sanity/image-url": "1.0.1",
     "lodash": "4.17.21",
     "react": "^18",
-    "sanity": "dev-preview || 3.0.0-rc.0"
+    "sanity": "dev-preview || 3.0.0-rc.2"
   },
   "engines": {
     "node": ">=14"
