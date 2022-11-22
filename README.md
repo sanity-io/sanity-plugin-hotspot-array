@@ -9,8 +9,15 @@ A configurable Custom Input for Arrays that will add and update items by clickin
 
 ## Installation
 
+```sh
+yarn add sanity-plugin-hotspot-array@studio-v2
 ```
-sanity install hotspot-array@studio-v2
+
+Next, add `"hotspot-array"` to `sanity.json` plugins array:
+```json
+"plugins": [
+  "hotspot-array"
+]
 ```
 
 ## Setup
