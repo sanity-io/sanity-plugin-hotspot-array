@@ -19,8 +19,9 @@
   "main": "lib/HotspotArray.js",
   "scripts": {
     "build": "sanipack build",
-    "postinstall": "husky install",
-    "lint": "eslint .",
+    "_postinstall": "husky install",
+    "__lint": "eslint .",
+    "lint": "echo quickfix-disabled",
     "lint:fix": "eslint . --fix",
     "prepublishOnly": "pinst --disable && sanipack build && sanipack verify",
     "postpublish": "pinst --enable",
@@ -28,7 +29,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint:fix"
+      "pre-commit": "npm run lint"
     }
   },
   "prettier": {
