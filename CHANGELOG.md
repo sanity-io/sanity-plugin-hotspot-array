@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v1.0.0...v1.0.1) (2022-11-25)
+
+### Bug Fixes
+
+- **deps:** sanity ^3.0.0 (works with rc.3) ([8fa35e3](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/8fa35e30633edd97a9e437a2cf130373b6ca3e61))
+
 ## [1.0.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v0.0.8...v1.0.0) (2022-11-16)
 
 ### ⚠ BREAKING CHANGES
