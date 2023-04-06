@@ -27,12 +27,12 @@ yarn add sanity-plugin-hotspot-array
 Add it as a plugin in sanity.config.ts (or .js):
 
 ```js
-import { imageHotspotArray } from "sanity-plugin-hotspot-array";
+import { imageHotspotArrayPlugin } from "sanity-plugin-hotspot-array";
 
 export default defineConfig({
   // ...
   plugins: [
-    imageHotspotArray(),
+    imageHotspotArrayPlugin(),
   ] 
 })
 ```
