@@ -5,6 +5,23 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v1.0.1...v2.0.0) (2024-04-17)
+
+### ⚠ BREAKING CHANGES
+
+- @sanity/ui ^2 and styled-components ^6.1 are new peer deps
+
+* New updated build process using our latest `@sanity/pkg-utils`
+* Updated to use `@sanity/ui` v2
+* Updated `@sanity/image-url` to v1.0.2 for compatibilty with newer `@sanity/client`s
+* Upgraded `framer-motion` to v11
+* Switched to `lodash-es`
+* Updated dev deps for updated local dev (internal)
+
+### Features
+
+- v2; updated plugin with updated compatibilty ([#22](https://github.com/sanity-io/sanity-plugin-hotspot-array/issues/22)) ([0af19be](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/0af19bee25a61d0e6b5ca4005fc3ccca33cbc3ef))
+
 ## [1.0.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v1.0.0...v1.0.1) (2022-11-25)
 
 ### Bug Fixes
