@@ -1,10 +1,18 @@
-/* eslint-disable */
 import {Box, Text, Tooltip} from '@sanity/ui'
 import {motion, useMotionValue} from 'framer-motion'
-import get from 'lodash/get'
-import React, {ComponentType, CSSProperties, ReactElement, useEffect} from 'react'
+import {get} from 'lodash-es'
+import {
+  ComponentType,
+  createElement,
+  CSSProperties,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
+import {type ObjectSchemaType, type RenderPreviewCallback} from 'sanity'
+
 import {FnHotspotMove, HotspotItem} from './ImageHotspotArray'
-import {ObjectSchemaType, RenderPreviewCallback} from 'sanity'
 
 const dragStyle: CSSProperties = {
   width: '1.4rem',
@@ -91,9 +99,9 @@ export default function Spot({
   index,
   schemaType,
   renderPreview,
-}: HotspotProps) {
-  const [isDragging, setIsDragging] = React.useState(false)
-  const [isHovering, setIsHovering] = React.useState(false)
+}: HotspotProps): ReactNode {
+  const [isDragging, setIsDragging] = useState(false)
+  const [isHovering, setIsHovering] = useState(false)
 
   // x/y are stored as % but need to be converted to px
   const x = useMotionValue(round(bounds.width * (value.x / 100)))
@@ -107,7 +115,7 @@ export default function Spot({
     y.set(round(bounds.height * (value.y / 100)))
   }, [x, y, value, bounds])
 
-  const handleDragEnd = React.useCallback(() => {
+  const handleDragEnd = useCallback(() => {
     setIsDragging(false)
 
     // get current values for x/y in px
@@ -124,10 +132,10 @@ export default function Spot({
 
     update(value._key, safeX, safeY)
   }, [x, y, value, update, bounds])
-  const handleDragStart = React.useCallback(() => setIsDragging(true), [])
+  const handleDragStart = useCallback(() => setIsDragging(true), [])
 
-  const handleHoverStart = React.useCallback(() => setIsHovering(true), [])
-  const handleHoverEnd = React.useCallback(() => setIsHovering(false), [])
+  const handleHoverStart = useCallback(() => setIsHovering(true), [])
+  const handleHoverEnd = useCallback(() => setIsHovering(false), [])
 
   if (!x || !y) {
     return null
@@ -140,7 +148,7 @@ export default function Spot({
       portal
       content={
         tooltip && typeof tooltip === 'function' ? (
-          React.createElement(tooltip, {value, renderPreview, schemaType})
+          createElement(tooltip, {value, renderPreview, schemaType})
         ) : (
           <Box padding={2} style={{maxWidth: 200, pointerEvents: `none`}}>
             <Text textOverflow="ellipsis">
