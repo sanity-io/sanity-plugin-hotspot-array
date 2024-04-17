@@ -1,6 +1,9 @@
-/* eslint-disable react/display-name */
-
 import {getImageDimensions} from '@sanity/asset-utils'
+import imageUrlBuilder from '@sanity/image-url'
+import {Card, Flex, Stack} from '@sanity/ui'
+import {randomKey} from '@sanity/util/content'
+import {get} from 'lodash-es'
+import {type MouseEvent, type ReactNode, useCallback, useMemo, useRef, useState} from 'react'
 import {
   ArrayOfObjectsInputProps,
   ImageValue,
@@ -12,16 +15,12 @@ import {
   useClient,
   useFormValue,
 } from 'sanity'
-import imageUrlBuilder from '@sanity/image-url'
-import {Card, Flex, Stack} from '@sanity/ui'
-import {randomKey} from '@sanity/util/content'
-import get from 'lodash/get'
-import React, {useCallback, useMemo, useRef, useState} from 'react'
 
-import {IUseResizeObserverCallback, useDebouncedCallback, useResizeObserver} from '@react-hookz/web'
 import Feedback from './Feedback'
-import Spot from './Spot'
 import {ImageHotspotOptions} from './plugin'
+import Spot from './Spot'
+import {useDebouncedCallback} from './useDebouncedCallback'
+import {useResizeObserver} from './useResizeObserver'
 
 const imageStyle = {width: `100%`, height: `auto`}
 
@@ -37,8 +36,8 @@ export type HotspotItem<HotspotFields = {[key: string]: unknown}> = {
 } & HotspotFields
 
 export function ImageHotspotArray(
-  props: ArrayOfObjectsInputProps<HotspotItem> & {imageHotspotOptions: ImageHotspotOptions}
-) {
+  props: ArrayOfObjectsInputProps<HotspotItem> & {imageHotspotOptions: ImageHotspotOptions},
+): ReactNode {
   const {value, onChange, imageHotspotOptions, schemaType, renderPreview} = props
 
   const sanityClient = useClient({apiVersion: '2022-01-01'})
@@ -80,12 +79,12 @@ export function ImageHotspotArray(
   }, [hotspotImage, sanityClient])
 
   const handleHotspotImageClick = useCallback(
-    (event: any) => {
-      const {nativeEvent} = event
+    (event: MouseEvent<HTMLImageElement>) => {
+      const {nativeEvent, currentTarget} = event
 
       // Calculate the x/y percentage of the click position
-      const x = Number(((nativeEvent.offsetX * 100) / nativeEvent.srcElement.width).toFixed(2))
-      const y = Number(((nativeEvent.offsetY * 100) / nativeEvent.srcElement.height).toFixed(2))
+      const x = Number(((nativeEvent.offsetX * 100) / currentTarget.width).toFixed(2))
+      const y = Number(((nativeEvent.offsetY * 100) / currentTarget.height).toFixed(2))
       const description = `New Hotspot at ${x}% x ${y}%`
 
       const newRow: HotspotItem = {
@@ -101,7 +100,7 @@ export function ImageHotspotArray(
 
       onChange(PatchEvent.from([setIfMissing([]), insert([newRow], 'after', [-1])]))
     },
-    [imageHotspotOptions, onChange, schemaType]
+    [imageHotspotOptions, onChange, schemaType],
   )
 
   const handleHotspotMove: FnHotspotMove = useCallback(
@@ -112,21 +111,24 @@ export function ImageHotspotArray(
           set(x, [{_key: key}, 'x']),
           // Set the `y` value of this array key item
           set(y, [{_key: key}, 'y']),
-        ])
+        ]),
       )
     },
-    [onChange]
+    [onChange],
   )
 
   const hotspotImageRef = useRef<HTMLImageElement | null>(null)
 
   const [imageRect, setImageRect] = useState<DOMRectReadOnly>()
-  const updateImageRectCallback = useDebouncedCallback(
-    ((e) => setImageRect(e.contentRect)) as IUseResizeObserverCallback,
-    [setImageRect],
-    200
+
+  useResizeObserver(
+    hotspotImageRef,
+    useDebouncedCallback(
+      (e: ResizeObserverEntry) => setImageRect(e.contentRect),
+      [setImageRect],
+      200,
+    ),
   )
-  useResizeObserver(hotspotImageRef, updateImageRectCallback)
 
   return (
     <Stack space={[2, 2, 3]}>
@@ -178,8 +180,9 @@ export function ImageHotspotArray(
       )}
       {imageHotspotOptions.pathRoot && !VALID_ROOT_PATHS.includes(imageHotspotOptions.pathRoot) && (
         <Feedback>
-          The supplied imageHotspotPathRoot "{imageHotspotOptions.pathRoot}" is not valid, falling
-          back to "document". Available values are "{VALID_ROOT_PATHS.join(', ')}".
+          The supplied imageHotspotPathRoot &quot;{imageHotspotOptions.pathRoot}&quot; is not valid,
+          falling back to &quot;document&quot;. Available values are &quot;
+          {VALID_ROOT_PATHS.join(', ')}&quot;.
         </Feedback>
       )}
       {props.renderDefault(props as unknown as ArrayOfObjectsInputProps)}
