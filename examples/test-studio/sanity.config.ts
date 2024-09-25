@@ -17,6 +17,8 @@ export default defineConfig({
         fieldsets: [{name: 'position', options: {columns: 2}}],
         fields: [
           {name: 'details', type: 'text', rows: 2},
+          {name: 'booleanTest', type: 'boolean', initialValue: true},
+          {name: 'stringTest', type: 'string', initialValue: 'Hello, World!'},
           {
             name: 'x',
             type: 'number',
