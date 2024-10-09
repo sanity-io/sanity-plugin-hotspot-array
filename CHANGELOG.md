@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.0.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.0.0...v2.0.1) (2024-10-09)
+
+### Bug Fixes
+
+- **deps:** upgrade `@sanity/asset-utils` to ^2 ([#29](https://github.com/sanity-io/sanity-plugin-hotspot-array/issues/29)) ([7c0c19d](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/7c0c19d5eba0ac54bb27721a6706a3b2fbe36630))
+
 ## [2.0.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v1.0.1...v2.0.0) (2024-04-17)
 
 ### ⚠ BREAKING CHANGES
