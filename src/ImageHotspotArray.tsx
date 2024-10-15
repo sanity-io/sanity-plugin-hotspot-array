@@ -10,10 +10,12 @@ import {
   insert,
   ObjectSchemaType,
   PatchEvent,
+  SchemaType,
   set,
   setIfMissing,
   useClient,
   useFormValue,
+  useResolveInitialValueForType,
 } from 'sanity'
 
 import Feedback from './Feedback'
@@ -51,6 +53,20 @@ export function ImageHotspotArray(
 
   const rootObject = useFormValue(imageHotspotPathRoot)
 
+  const resolveInitialValueForType = useResolveInitialValueForType()
+  const resolveInitialValue = useCallback(
+    async (type: ObjectSchemaType) => {
+      return resolveInitialValueForType(type as unknown as SchemaType, {})
+        .then((initialValue) => {
+          return initialValue
+        })
+        .catch(() => {
+          return undefined
+        })
+    },
+    [resolveInitialValueForType],
+  )
+
   /**
    * Finding the image from the imageHotspotPathRoot (defaults to document),
    * using the path from the hotspot's `options` field
@@ -79,7 +95,7 @@ export function ImageHotspotArray(
   }, [hotspotImage, sanityClient])
 
   const handleHotspotImageClick = useCallback(
-    (event: MouseEvent<HTMLImageElement>) => {
+    async (event: MouseEvent<HTMLImageElement>) => {
       const {nativeEvent, currentTarget} = event
 
       // Calculate the x/y percentage of the click position
@@ -87,9 +103,12 @@ export function ImageHotspotArray(
       const y = Number(((nativeEvent.offsetY * 100) / currentTarget.height).toFixed(2))
       const description = `New Hotspot at ${x}% x ${y}%`
 
+      const initialValues = await resolveInitialValue(schemaType.of[0].type as ObjectSchemaType)
+
       const newRow: HotspotItem = {
         _key: randomKey(12),
         _type: schemaType.of[0].name,
+        ...initialValues,
         x,
         y,
       }
@@ -100,7 +119,7 @@ export function ImageHotspotArray(
 
       onChange(PatchEvent.from([setIfMissing([]), insert([newRow], 'after', [-1])]))
     },
-    [imageHotspotOptions, onChange, schemaType],
+    [imageHotspotOptions, onChange, resolveInitialValue, schemaType],
   )
 
   const handleHotspotMove: FnHotspotMove = useCallback(
