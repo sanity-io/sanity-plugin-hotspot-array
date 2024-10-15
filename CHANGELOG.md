@@ -5,6 +5,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.0.1...v2.1.0) (2024-10-15)
+
+### Features
+
+- support initial values ([d9cd56c](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/d9cd56c83f4cf36ae296bbc0a56aca9cb8478446))
+- support initial values in image click ([b92c1f8](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/b92c1f892ec168da9c50af1f3df0540ce54a1080))
+
+### Bug Fixes
+
+- package lock weirdness ([da28862](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/da2886248b30bf9f30602606d9f938d93831d1a0))
+
 ## [2.0.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.0.0...v2.0.1) (2024-10-09)
 
 ### Bug Fixes
