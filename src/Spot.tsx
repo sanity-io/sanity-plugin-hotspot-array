@@ -142,58 +142,60 @@ export default function Spot({
   }
 
   return (
-    <Tooltip
-      key={value._key}
-      disabled={isDragging}
-      portal
-      content={
-        tooltip && typeof tooltip === 'function' ? (
-          createElement(tooltip, {value, renderPreview, schemaType})
-        ) : (
-          <Box padding={2} style={{maxWidth: 200, pointerEvents: `none`}}>
-            <Text textOverflow="ellipsis">
-              {hotspotDescriptionPath
-                ? (get(value, hotspotDescriptionPath) as string)
-                : `${value.x}% x ${value.y}%`}
-            </Text>
-          </Box>
-        )
-      }
+    <motion.div
+      drag
+      dragConstraints={bounds}
+      dragElastic={0}
+      dragMomentum={false}
+      onDragEnd={handleDragEnd}
+      onDragStart={handleDragStart}
+      onHoverStart={handleHoverStart}
+      onHoverEnd={handleHoverEnd}
+      style={{
+        ...dragStyle,
+        x,
+        y,
+        ...(isDragging && {...dragStyleWhileDrag}),
+        ...(isHovering && {...dragStyleWhileHover}),
+      }}
     >
-      <motion.div
-        drag
-        dragConstraints={bounds}
-        dragElastic={0}
-        dragMomentum={false}
-        onDragEnd={handleDragEnd}
-        onDragStart={handleDragStart}
-        onHoverStart={handleHoverStart}
-        onHoverEnd={handleHoverEnd}
-        style={{
-          ...dragStyle,
-          x,
-          y,
-          ...(isDragging && {...dragStyleWhileDrag}),
-          ...(isHovering && {...dragStyleWhileHover}),
-        }}
+      <Tooltip
+        key={value._key}
+        disabled={isDragging}
+        portal
+        content={
+          tooltip && typeof tooltip === 'function' ? (
+            createElement(tooltip, {value, renderPreview, schemaType})
+          ) : (
+            <Box padding={2} style={{maxWidth: 200, pointerEvents: `none`}}>
+              <Text textOverflow="ellipsis">
+                {hotspotDescriptionPath
+                  ? (get(value, hotspotDescriptionPath) as string)
+                  : `${value.x}% x ${value.y}%`}
+              </Text>
+            </Box>
+          )
+        }
       >
-        {/* Dot */}
-        <Box
-          style={{
-            ...dotStyle,
-            ...((isDragging || isHovering) && {...dotStyleWhileActive}),
-          }}
-        />
-        {/* Label */}
-        <div
-          style={{
-            ...labelStyle,
-            ...((isDragging || isHovering) && {...labelStyleWhileActive}),
-          }}
-        >
-          {index + 1}
+        <div>
+          {/* Dot */}
+          <Box
+            style={{
+              ...dotStyle,
+              ...((isDragging || isHovering) && {...dotStyleWhileActive}),
+            }}
+          />
+          {/* Label */}
+          <div
+            style={{
+              ...labelStyle,
+              ...((isDragging || isHovering) && {...labelStyleWhileActive}),
+            }}
+          >
+            {index + 1}
+          </div>
         </div>
-      </motion.div>
-    </Tooltip>
+      </Tooltip>
+    </motion.div>
   )
 }
