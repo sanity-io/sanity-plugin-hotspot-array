@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.1.0...v2.1.1) (2024-11-19)
+
+### Bug Fixes
+
+- prevent tooltip from resetting tooltip position ([b9ec268](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/b9ec268363957ec60304fc9f1dcc99d194b55893))
+
 ## [2.1.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.0.1...v2.1.0) (2024-10-15)
 
 ### Features
