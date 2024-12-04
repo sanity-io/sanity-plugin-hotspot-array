@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.1.2](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.1.1...v2.1.2) (2024-12-04)
+
+### Bug Fixes
+
+- reverse negated condition ([bb0d315](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/bb0d3153ebf2bf9a67e2b07808a0259a6cf332be))
+
 ## [2.1.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.1.0...v2.1.1) (2024-11-19)
 
 ### Bug Fixes
