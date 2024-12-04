@@ -75,7 +75,7 @@ export function ImageHotspotArray(
    * check if there are any changes to the hotspotImage and update the reference
    */
   const hotspotImage = useMemo(() => {
-    return get(rootObject, imageHotspotOptions.imagePath) as ImageValue | undefined
+    return (!imageHotspotOptions.imagePath ? rootObject : get(rootObject, imageHotspotOptions.imagePath)) as ImageValue | undefined
   }, [rootObject, imageHotspotOptions.imagePath])
 
   const displayImage = useMemo(() => {
