@@ -53,9 +53,8 @@
     "@sanity/asset-utils": "^2.0.6",
     "@sanity/image-url": "^1.0.2",
     "@sanity/incompatible-plugin": "^1.0.4",
-    "@sanity/util": "^3.0.0",
-    "@types/lodash-es": "^4.17.12",
-    "framer-motion": "^11.0.0",
+    "@sanity/util": "^3.78.1",
+    "framer-motion": "^12.4.10",
     "lodash-es": "^4.17.21"
   },
   "devDependencies": {
@@ -65,6 +64,7 @@
     "@sanity/pkg-utils": "^6.7.0",
     "@sanity/plugin-kit": "^4.0.4",
     "@sanity/semantic-release-preset": "^4.1.7",
+    "@types/lodash-es": "^4.17.12",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
     "eslint": "^8.57.0",
@@ -83,9 +83,9 @@
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "@sanity/ui": "^2.0.0",
-    "react": "^18",
-    "sanity": "^3.0.0",
+    "@sanity/ui": "^2",
+    "react": "^18.3 || ^19",
+    "sanity": "^3",
     "styled-components": "^6.1"
   },
   "engines": {
