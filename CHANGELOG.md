@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.1.2...v2.2.0) (2025-03-07)
+
+### Features
+
+- add react 19 to peer deps ([646c253](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/646c25367c2fcdd4941dc82b89123a1bb1a6a2a8))
+
 ## [2.1.2](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.1.1...v2.1.2) (2024-12-04)
 
 ### Bug Fixes
