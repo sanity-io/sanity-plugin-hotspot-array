@@ -63,7 +63,7 @@
     "@sanity/browserslist-config": "^1.0.3",
     "@sanity/pkg-utils": "^6.7.0",
     "@sanity/plugin-kit": "^4.0.4",
-    "@sanity/semantic-release-preset": "^4.1.7",
+    "@sanity/semantic-release-preset": "^5.0.0",
     "@types/lodash-es": "^4.17.12",
     "@typescript-eslint/eslint-plugin": "^7.7.0",
     "@typescript-eslint/parser": "^7.7.0",
