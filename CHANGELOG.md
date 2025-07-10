@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [2.2.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.2.0...v2.2.1) (2025-07-10)
+
+### Bug Fixes
+
+- **deps:** allow studio v4 in peer dep ranges ([#36](https://github.com/sanity-io/sanity-plugin-hotspot-array/issues/36)) ([a9e54ff](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/a9e54ff809cd8b6054098d681e35f534d09e190a))
+
 ## [2.2.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.1.2...v2.2.0) (2025-03-07)
 
 ### Features
