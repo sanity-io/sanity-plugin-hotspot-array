@@ -1,8 +1,5 @@
 # sanity-plugin-hotspot-array
 
->This is a **Sanity Studio v3** plugin.
-> For the v2 version, please refer to the [v2-branch](https://github.com/sanity-io/sanity-plugin-hotspot-array/tree/studio-v2).
-
 ## What is it?
 
 A configurable Custom Input for Arrays that will add and update items by clicking on an Image
@@ -21,19 +18,16 @@ or
 yarn add sanity-plugin-hotspot-array
 ```
 
-
 ## Usage
 
 Add it as a plugin in sanity.config.ts (or .js):
 
 ```js
-import { imageHotspotArrayPlugin } from "sanity-plugin-hotspot-array";
+import {imageHotspotArrayPlugin} from 'sanity-plugin-hotspot-array'
 
 export default defineConfig({
   // ...
-  plugins: [
-    imageHotspotArrayPlugin(),
-  ] 
+  plugins: [imageHotspotArrayPlugin()],
 })
 ```
 
@@ -61,7 +55,7 @@ export const productSchema = defineType({
           descriptionPath: `details`,
           // see `Custom tooltip` setup below
           tooltip: undefined,
-        }
+        },
       },
     }),
     // ...all your other fields
@@ -69,6 +63,7 @@ export const productSchema = defineType({
   ],
 })
 ```
+
 There is no need to provide an explicit input component, as that is handled by the plugin.
 
 The plugin makes a number of assumptions to add and update data in the array. Including:
@@ -93,6 +88,7 @@ options: {
 ```
 
 To pick the image out of the hotspot-array parent object, use
+
 ```js
 options: {
   imageHotspot: {
@@ -166,23 +162,19 @@ You can customise the Tooltip to display any Component, which will receive `valu
 ### Example 1 - use default hotspot preview
 
 ```tsx
-import { Box } from "@sanity/ui";
-import { HotspotTooltipProps } from "sanity-plugin-hotspot-array";
+import {Box} from '@sanity/ui'
+import {HotspotTooltipProps} from 'sanity-plugin-hotspot-array'
 
-export function HotspotPreview({
-  value,
-  schemaType,
-  renderPreview,
-}: HotspotTooltipProps) {
+export function HotspotPreview({value, schemaType, renderPreview}: HotspotTooltipProps) {
   return (
-    <Box padding={2} style={{ minWidth: 200 }}>
+    <Box padding={2} style={{minWidth: 200}}>
       {renderPreview({
         value,
         schemaType,
-        layout: "default",
+        layout: 'default',
       })}
     </Box>
-  );
+  )
 }
 ```
 
@@ -197,25 +189,24 @@ options: {
 ```
 
 ### Example 2 - reference value in hotspot
+
 In this example our `value` object has a `reference` field to the `product` schema type, and will show a document preview.
 
 ```jsx
-import {useSchema }from 'sanity'
+import {useSchema} from 'sanity'
 import {Box} from '@sanity/ui'
 
 export function ProductPreview({value, renderPreview}) {
   const productSchemaType = useSchema().get('product')
   return (
     <Box padding={2} style={{minWidth: 200}}>
-      {value?.product?._ref ? (
-        renderPreview({
-           value,
-           schemaType: productSchemaType,
-           layout: "default"
-        })
-      ) : (
-        `No reference selected`
-      )}
+      {value?.product?._ref
+        ? renderPreview({
+            value,
+            schemaType: productSchemaType,
+            layout: 'default',
+          })
+        : `No reference selected`}
     </Box>
   )
 }

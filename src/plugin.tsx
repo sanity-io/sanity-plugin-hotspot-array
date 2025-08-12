@@ -11,7 +11,7 @@ export interface ImageHotspotOptions<HotspotFields = {[key: string]: unknown}> {
   tooltip?: ComponentType<HotspotTooltipProps<HotspotFields>>
 }
 
-declare module '@sanity/types' {
+declare module 'sanity' {
   export interface ArrayOptions {
     imageHotspot?: ImageHotspotOptions
   }

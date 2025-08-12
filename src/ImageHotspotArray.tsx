@@ -142,7 +142,7 @@ export function ImageHotspotArray(
 
   const [imageRect, setImageRect] = useState<DOMRectReadOnly>()
 
-  useResizeObserver(
+  useResizeObserver<HTMLImageElement>(
     hotspotImageRef,
     useDebouncedCallback(
       (e: ResizeObserverEntry) => setImageRect(e.contentRect),
