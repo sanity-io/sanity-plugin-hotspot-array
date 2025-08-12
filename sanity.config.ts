@@ -1,7 +1,7 @@
 import {defineConfig, defineField, defineType} from 'sanity'
 import {structureTool} from 'sanity/structure'
 
-import {imageHotspotArrayPlugin} from '../../dist/index.mjs'
+import {imageHotspotArrayPlugin} from './src'
 
 export default defineConfig({
   name: 'default',

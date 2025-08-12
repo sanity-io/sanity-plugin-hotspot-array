@@ -1,9 +1,6 @@
 {
   "name": "sanity-plugin-hotspot-array",
   "version": "2.2.1",
-  "workspaces": [
-    "./examples/*"
-  ],
   "description": "A configurable Custom Input for Arrays that will add and update items by clicking on an Image",
   "keywords": [
     "sanity",
@@ -38,6 +35,7 @@
     "sanity.json"
   ],
   "scripts": {
+    "dev": "sanity dev",
     "prebuild": "npm run clean && plugin-kit verify-package --silent && pkg-utils",
     "build": "plugin-kit verify-package --silent && pkg-utils build --strict --check --clean",
     "clean": "rimraf dist",
@@ -82,6 +80,7 @@
     "react": "^19.1.1",
     "rimraf": "^5.0.5",
     "sanity": "^4.3.0",
+    "styled-components": "^6.1.19",
     "typescript": "5.9.2"
   },
   "peerDependencies": {
