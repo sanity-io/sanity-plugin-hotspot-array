@@ -5,6 +5,21 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.2.1...v3.0.0) (2025-08-12)
+
+### ⚠ BREAKING CHANGES
+
+- require sanity v4
+- require node v20 or later
+
+### Bug Fixes
+
+- `@sanity/ui` should be a regular dependency ([ab33b35](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/ab33b3581f836951d353926d7f4c51a8f6337f3c))
+- **deps:** update non-major deps ([88be932](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/88be9328b4d13c2ca502cdf1c1b369372d781727))
+- require node v20 or later ([030b0df](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/030b0dfd33a8b218f8bd9e2bd108f2d8c233faed))
+- require sanity v4 ([172ab01](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/172ab01b0c6be4caa955c86305d756d3778d35fa))
+- styled-components isn't actually used directly ([803fdc2](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/803fdc2a8c067f94698b16e203209460f93e3558))
+
 ## [2.2.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.2.0...v2.2.1) (2025-07-10)
 
 ### Bug Fixes
