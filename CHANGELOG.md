@@ -5,6 +5,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [3.0.1](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v3.0.0...v3.0.1) (2025-08-14)
+
+### Bug Fixes
+
+- allow v20 in node engines ([453cb0d](https://github.com/sanity-io/sanity-plugin-hotspot-array/commit/453cb0d155ec9c844f2df6af281ce1fef295ee9d))
+
 ## [3.0.0](https://github.com/sanity-io/sanity-plugin-hotspot-array/compare/v2.2.1...v3.0.0) (2025-08-12)
 
 ### ⚠ BREAKING CHANGES

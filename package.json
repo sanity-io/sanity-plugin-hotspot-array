@@ -1,6 +1,6 @@
 {
   "name": "sanity-plugin-hotspot-array",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A configurable Custom Input for Arrays that will add and update items by clicking on an Image",
   "keywords": [
     "sanity",
