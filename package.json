@@ -30,9 +30,7 @@
   "types": "./dist/index.d.ts",
   "files": [
     "src",
-    "dist",
-    "v2-incompatible.js",
-    "sanity.json"
+    "dist"
   ],
   "scripts": {
     "dev": "sanity dev",
@@ -50,7 +48,6 @@
   "dependencies": {
     "@sanity/asset-utils": "^2.2.1",
     "@sanity/image-url": "^2.1.1",
-    "@sanity/incompatible-plugin": "^1.0.5",
     "@sanity/ui": "^3.0.6",
     "@sanity/util": "^6.0.0",
     "framer-motion": "^12.23.12",
@@ -93,6 +90,7 @@
   "sanityPlugin": {
     "verifyPackage": {
       "nodeEngine": false,
+      "sanityV2Json": false,
       "tsc": false
     }
   }
